@@ -18,7 +18,7 @@ export default {
 
     created() {
 
-        axios.get(this.store.APIcallFilm).then((res) => {
+        axios.get(this.store.APIcallTrending).then((res) => {
 
             this.store.films = res.data.results;
 
@@ -36,14 +36,15 @@ export default {
 
                 newFilmApiString += `${this.store.APIquery}${this.store.filmName}`;
 
+                this.callApi(newFilmApiString);
+
+            } else {
+
+                newFilmApiString = this.store.APIcallTrending;
+
+                this.callApi(newFilmApiString);
             };
 
-            axios.get(newFilmApiString).then((res) => {
-
-                this.store.films = res.data.results;
-                console.log(this.store.films);
-
-            });
 
             let newSeriesApiString = this.store.APIcallSeries;
 
@@ -51,13 +52,30 @@ export default {
 
                 newSeriesApiString += `${this.store.APIquery}${this.store.filmName}`;
 
-            };
+                axios.get(newSeriesApiString).then((res) => {
+    
+                    res.data.results.forEach(result => {
+                        this.store.films.push(result);
+                    })
+    
+                });
 
-            axios.get(newSeriesApiString).then((res) => {
+            } else {
 
-                res.data.results.forEach(result => {
-                    this.store.films.push(result);
-                })
+                newSeriesApiString = this.store.APIcallTrending;
+
+                this.callApi(newSeriesApiString);
+            }
+
+
+        },
+
+        callApi(string) {
+
+            axios.get(string).then((res) => {
+
+                this.store.films = res.data.results;
+                console.log(this.store.films);
 
             });
 
@@ -76,6 +94,10 @@ export default {
 
     
     <div class="film-container">
+        <div class="trending">
+            In Tendenza Questa Settimana
+        </div>
+        
         <FilmCard v-for="film in store.films" :film="film"></FilmCard>
     </div>
 
@@ -97,5 +119,12 @@ export default {
         flex-wrap: wrap;
         gap: 20px;
         margin: -100px 0 50px;
+
+        .trending {
+            width: 100%;
+            padding-left: 30px;
+            font-size: 26px;
+            font-weight: bold;
+        }
     }
 </style>
