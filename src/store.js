@@ -12,6 +12,11 @@ export const store = reactive({
 
     filmName: "",
 
+    URLimg: "http://image.tmdb.org/t/p/original",
+
 
 
 });
+
+
+// <!-- http://image.tmdb.org/t/p/original/gkgqtr2weef0sUM3k1mFe52iola.jpg -->

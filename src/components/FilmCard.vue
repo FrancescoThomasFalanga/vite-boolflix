@@ -1,10 +1,11 @@
 <script>
+import {store} from "../store.js";
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 
 export default {
     data() {
         return {
-
+            store,
         }
     },
 
@@ -25,7 +26,7 @@ export default {
             }
 
             return language;
-        }
+        },
 
     },
 }
@@ -34,6 +35,8 @@ export default {
 
 <template>
     <div class="card">
+
+        <img v-if="!film.poster_path == '' " :src="this.store.URLimg + film.poster_path" alt="">
 
         <span><strong>Titolo Originale:</strong> {{film.original_title}} {{ film.original_name }}</span>
         <span><strong>Titolo:</strong> {{film.title }} {{film.name}}</span>
@@ -53,6 +56,10 @@ export default {
         gap: 20px;
         width: 20%;
         height: 600px;
+    }
+
+    img {
+        width: 200px;
     }
 
 </style>
