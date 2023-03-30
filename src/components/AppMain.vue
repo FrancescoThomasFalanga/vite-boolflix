@@ -85,6 +85,6 @@ export default {
         display: flex;
         gap: 20px;
         flex-wrap: wrap;
-
+        margin: 50px 0;
     }
 </style>

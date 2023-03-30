@@ -47,17 +47,33 @@ export default {
 <template>
     <div class="card">
 
-        <img v-if="!film.poster_path == '' " :src="this.store.URLimg + film.poster_path" alt="">
-        <div v-else>Immagine non disponibile</div>
+        <div class="img-hover">
+            <img v-if="!film.poster_path == '' " :src="this.store.URLimg + film.poster_path" alt="">
+            <div v-else class="unknown">Immagine non disponibile</div>
+        </div>
 
-        <span><strong>Titolo Originale:</strong> {{film.original_title}} {{ film.original_name }}</span>
-        <span><strong>Titolo:</strong> {{film.title }} {{film.name}}</span>
+        <div class="hidden">
+            <div>
+                <span v-if="film.original_title !== film.title"><strong>Titolo Originale:</strong> {{film.original_title}} {{ film.original_name }}</span>
+            </div>
+            
+            <div>
+                <span><strong>Titolo:</strong> {{film.title }} {{film.name}}</span>
+            </div>
+    
+            <div>
+                <span><strong>Lingua Originale: </strong> <span :class="`fi fi-${flagEmoji()} fis`"> </span></span>
+            </div>
+    
+            <div class="stars">
+                <strong>Voto:</strong>
+                <i v-for="star in showStars()" class="fa-solid fa-star" :class="star ? 'yellow' : '' "></i>
+            </div>
 
-        <span>Lingua Originale: <span :class="`fi fi-${flagEmoji()} fis`"></span></span>
-        <strong>Voto:</strong>
-
-        <div class="stars">
-            <i v-for="star in showStars()" class="fa-solid fa-star" :class="star ? 'yellow' : '' "></i>
+            <div class="overview">
+                <span v-if="!film.overview == '' "><strong>Descrizione:</strong> {{ film.overview }} </span>
+                <span v-else><strong>Descrizione:</strong> Non disponibile</span>
+            </div>
         </div>
 
     </div> 
@@ -67,25 +83,69 @@ export default {
 <style lang="scss" scoped>
     
     .card {
+        position: relative;
         display: flex;
         flex-flow: column wrap;
         gap: 20px;
-        width: 20%;
-        height: 600px;
-        background-color: rgb(130, 132, 238);
+        width: calc(20% - 30px);
+        height: auto;
+        cursor: pointer;
+        background-color: rgba(56, 56, 56, 0.151);
+    }
+
+    .unknown {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .card:hover .unknown {
+        opacity: 0;
+        transition: 1s linear all;
+    }
+
+    .img-hover:hover {
+        position: relative;
+        z-index: 2;
+        opacity: .1;
+        transition: 1s linear all;
+    }
+
+    .hidden {
+        display: none;
+
+        .card:hover & {
+            display: flex;
+            flex-flow: column wrap;
+            gap: 20px;
+            position: absolute;
+            padding: 20px;
+        }
     }
 
     img {
         width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 
     .stars {
         display: flex;
+        align-items: center;
         gap: 4px;
     }
 
     .yellow {
         color: yellow;
+    }
+
+    .overview {
+        position: relative;
+        padding-top: 30px;
+        text-overflow: ellipsis;
+        overflow-y: hidden;
+        height: 250px;
     }
 
 </style>
