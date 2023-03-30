@@ -88,15 +88,15 @@ export default {
                 background-color: rgba(255, 0, 0, 0.301);
             }
             .left {
+                border: none;
                 border-top-right-radius: 0;
                 border-bottom-right-radius: 0;
-                border: none;
             }
 
             .right {
+                border: none;
                 border-top-left-radius: 0;
                 border-bottom-left-radius: 0;
-                border: none;
                 cursor: pointer;
             }
 
@@ -118,7 +118,6 @@ export default {
         ul {
             display: flex;
             gap: 15px;
-    
             list-style-type: none;
     
             li {

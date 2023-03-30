@@ -52,6 +52,7 @@ export default {
             <div v-else class="unknown">Immagine non disponibile</div>
         </div>
 
+
         <div class="hidden">
             <div>
                 <span v-if="film.original_title !== film.title"><strong>Titolo Originale:</strong> {{film.original_title}} {{ film.original_name }}</span>
@@ -143,15 +144,9 @@ export default {
     .overview {
         position: relative;
         padding-top: 30px;
-        text-overflow: ellipsis;
-        overflow-y: hidden;
         height: 250px;
+        overflow-y: hidden;
+        text-overflow: ellipsis;
     }
 
 </style>
-
-
-<!-- CLASSE PER AGGIUNGERE IN HTML LE STELLE FONT-AWESOME -->
-<!-- <i class="fa-solid fa-star"></i> -->
-
-<!-- {{ Math.min(Math.max(Math.ceil(film.vote_average / 2), 1), 5) }} -->

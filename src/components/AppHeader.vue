@@ -5,11 +5,6 @@ export default {
 
         }
     },
-
-    mounted() {
-        /* now play three times as fast just for the heck of it */
-        document.querySelector('video').playbackRate = 10.0;
-    },
 }
 </script>
 
@@ -25,12 +20,13 @@ export default {
     
     .video {
         margin-top: 80px;
+        
+        video {
+            width: 100%;
+            height: 90vh;
+            object-fit: cover;
+        }
     }
 
-    video {
-        width: 100%;
-        height: 90vh;
-        object-fit: cover;
-    }
 
 </style>
