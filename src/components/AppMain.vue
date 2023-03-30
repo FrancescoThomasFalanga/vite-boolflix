@@ -70,7 +70,10 @@ export default {
 
 <template>
 
-    <SearchItem @searchFilm="search()"></SearchItem>
+    <div class="nav-bar">
+        <SearchItem @searchFilm="search()"></SearchItem>
+    </div>
+
     
     <div class="film-container">
 
@@ -81,10 +84,19 @@ export default {
 
 
 <style lang="scss" scoped>
+    .nav-bar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background-color: black;
+        z-index: 3;
+    }
+
     .film-container {
         display: flex;
+        justify-content: space-around;
         gap: 20px;
         flex-wrap: wrap;
-        margin: 50px 0;
+        margin: -100px 0 50px;
     }
 </style>
