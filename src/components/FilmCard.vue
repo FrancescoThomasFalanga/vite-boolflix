@@ -24,7 +24,11 @@ export default {
                 language = "gb";
             } else if(language == "") {
                 language = "Sconosciuta";
-            }
+            } else if(language == "ja") {
+                language = "jp";
+            } else if(language == "ko") {
+                language = "kr";
+            };
 
             return language;
         },
