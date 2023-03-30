@@ -18,10 +18,9 @@ export default {
 
     created() {
 
-        axios.get(this.store.APIcall).then((res) => {
+        axios.get(this.store.APIcallFilm).then((res) => {
 
             this.store.films = res.data.results;
-            console.log(this.store.films);
 
         });
 
@@ -31,19 +30,36 @@ export default {
 
         search() {
 
-            let newApiString = this.store.APIcall;
+            let newFilmApiString = this.store.APIcallFilm;
 
             if (!this.store.filmName == "") {
 
-                newApiString += `${this.store.APIquery}${this.store.filmName}`;
+                newFilmApiString += `${this.store.APIquery}${this.store.filmName}`;
 
             };
 
-            axios.get(newApiString).then((res) => {
+            axios.get(newFilmApiString).then((res) => {
 
                 this.store.films = res.data.results;
+                console.log(this.store.films);
 
-            })
+            });
+
+            let newSeriesApiString = this.store.APIcallSeries;
+
+            if (!this.store.filmName == "") {
+
+                newSeriesApiString += `${this.store.APIquery}${this.store.filmName}`;
+
+            };
+
+            axios.get(newSeriesApiString).then((res) => {
+
+                res.data.results.forEach(result => {
+                    this.store.films.push(result);
+                })
+
+            });
 
         },
 

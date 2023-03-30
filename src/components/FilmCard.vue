@@ -1,4 +1,6 @@
 <script>
+import "/node_modules/flag-icons/css/flag-icons.min.css";
+
 export default {
     data() {
         return {
@@ -9,6 +11,23 @@ export default {
     props: {
         film: Object,
     },
+
+    methods: {
+
+        flagEmoji() {
+
+            let language = this.film.original_language;
+
+            if (language == "en") {
+                language = "gb";
+            } else if(language == "") {
+                language = "Sconosciuta";
+            }
+
+            return language;
+        }
+
+    },
 }
 </script>
 
@@ -16,10 +35,10 @@ export default {
 <template>
     <div class="card">
 
-        <span>Titolo Originale Film: {{film.original_title}}</span>
-        <strong>Titolo Film: {{film.title }}</strong>
+        <span><strong>Titolo Originale:</strong> {{film.original_title}} {{ film.original_name }}</span>
+        <span><strong>Titolo:</strong> {{film.title }} {{film.name}}</span>
 
-        <span>Lingua Originale: {{ film.original_language }}</span>
+        <span>Lingua Originale: <span :class="`fi fi-${flagEmoji()} fis`"></span></span>
         <strong>Voto: {{ film.vote_average }}</strong>
 
     </div>
