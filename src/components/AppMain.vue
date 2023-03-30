@@ -43,11 +43,16 @@ export default {
 
                 this.callApi(newFilmApiString);
 
+                this.store.APIcallTrending = "";
+
             } else {
+
+                this.store.APIcallTrending = "https://api.themoviedb.org/3/trending/all/week?api_key=6529eb99a13649a95432918926d0d7ce&language=it-IT";
 
                 newFilmApiString = this.store.APIcallTrending;
 
                 this.callApi(newFilmApiString);
+
             };
 
 
@@ -65,13 +70,19 @@ export default {
     
                 });
 
+                this.store.APIcallTrending = "";
+
             } else {
+
+                this.store.APIcallTrending = "https://api.themoviedb.org/3/trending/all/week?api_key=6529eb99a13649a95432918926d0d7ce&language=it-IT";
 
                 newSeriesApiString = this.store.APIcallTrending;
 
                 this.showTrendingText = true;
 
+
                 this.callApi(newSeriesApiString);
+
             }
 
 
@@ -100,7 +111,7 @@ export default {
     </div>
 
     
-    <div class="film-container">
+    <div class="film-container" :class="this.showTrendingText ? '' : 'no-trending' ">
         <div v-if="this.showTrendingText" class="trending">
             In Tendenza Questa Settimana
         </div>
@@ -133,5 +144,10 @@ export default {
             font-size: 26px;
             font-weight: bold;
         }
+
+    }
+    
+    .no-trending {
+        margin: 80px 0;
     }
 </style>
