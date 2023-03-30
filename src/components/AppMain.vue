@@ -53,6 +53,8 @@ export default {
 
                 this.callApi(newFilmApiString);
 
+                this.showTrendingText = true;
+
             };
 
 
@@ -72,18 +74,9 @@ export default {
 
                 this.store.APIcallTrending = "";
 
-            } else {
+                this.showTrendingText = false;
 
-                this.store.APIcallTrending = "https://api.themoviedb.org/3/trending/all/week?api_key=6529eb99a13649a95432918926d0d7ce&language=it-IT";
-
-                newSeriesApiString = this.store.APIcallTrending;
-
-                this.showTrendingText = true;
-
-
-                this.callApi(newSeriesApiString);
-
-            }
+            };
 
 
         },

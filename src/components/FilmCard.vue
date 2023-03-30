@@ -109,8 +109,9 @@ export default {
     .img-hover:hover {
         position: relative;
         z-index: 2;
-        opacity: .1;
+        opacity: .2;
         transition: 1s linear all;
+        transform: scale(1.2);
     }
 
     .hidden {
