@@ -6,6 +6,7 @@ export default {
     data() {
         return {
             store,
+            stars: 5,
         }
     },
 
@@ -28,6 +29,16 @@ export default {
             return language;
         },
 
+        showStars() {
+
+            let newVote = Math.min(Math.max(Math.ceil(this.film.vote_average / 2), 1), 5);
+
+            let starsToColor = Array(newVote).fill(1);
+            let starsToEmpty = Array(this.stars - newVote).fill(0);
+
+            return starsToColor.concat(starsToEmpty);
+        }
+
     },
 }
 </script>
@@ -37,14 +48,19 @@ export default {
     <div class="card">
 
         <img v-if="!film.poster_path == '' " :src="this.store.URLimg + film.poster_path" alt="">
+        <div v-else>Immagine non disponibile</div>
 
         <span><strong>Titolo Originale:</strong> {{film.original_title}} {{ film.original_name }}</span>
         <span><strong>Titolo:</strong> {{film.title }} {{film.name}}</span>
 
         <span>Lingua Originale: <span :class="`fi fi-${flagEmoji()} fis`"></span></span>
-        <strong>Voto: {{ film.vote_average }}</strong>
+        <strong>Voto:</strong>
 
-    </div>
+        <div class="stars">
+            <i v-for="star in showStars()" class="fa-solid fa-star" :class="star ? 'yellow' : '' "></i>
+        </div>
+
+    </div> 
 </template>
 
 
@@ -56,10 +72,26 @@ export default {
         gap: 20px;
         width: 20%;
         height: 600px;
+        background-color: rgb(130, 132, 238);
     }
 
     img {
-        width: 200px;
+        width: 100%;
+    }
+
+    .stars {
+        display: flex;
+        gap: 4px;
+    }
+
+    .yellow {
+        color: yellow;
     }
 
 </style>
+
+
+<!-- CLASSE PER AGGIUNGERE IN HTML LE STELLE FONT-AWESOME -->
+<!-- <i class="fa-solid fa-star"></i> -->
+
+<!-- {{ Math.min(Math.max(Math.ceil(film.vote_average / 2), 1), 5) }} -->
