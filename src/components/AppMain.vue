@@ -8,6 +8,7 @@ export default {
     data() {
         return {
             store,
+            showTrendingText: true,
         }
     },
 
@@ -20,7 +21,9 @@ export default {
 
         axios.get(this.store.APIcallTrending).then((res) => {
 
+            this.showTrendingText = true;
             this.store.films = res.data.results;
+
 
         });
 
@@ -29,6 +32,8 @@ export default {
     methods: {
 
         search() {
+
+            this.showTrendingText = false;
 
             let newFilmApiString = this.store.APIcallFilm;
 
@@ -64,6 +69,8 @@ export default {
 
                 newSeriesApiString = this.store.APIcallTrending;
 
+                this.showTrendingText = true;
+
                 this.callApi(newSeriesApiString);
             }
 
@@ -94,10 +101,10 @@ export default {
 
     
     <div class="film-container">
-        <div class="trending">
+        <div v-if="this.showTrendingText" class="trending">
             In Tendenza Questa Settimana
         </div>
-        
+
         <FilmCard v-for="film in store.films" :film="film"></FilmCard>
     </div>
 
