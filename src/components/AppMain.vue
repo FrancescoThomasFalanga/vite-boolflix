@@ -29,12 +29,14 @@ export default {
 
     },
 
+    props: {
+    },
+
     methods: {
 
         search() {
 
             this.showTrendingText = false;
-
             let newFilmApiString = this.store.APIcallFilm;
 
             if (!this.store.filmName == "") {
@@ -92,6 +94,49 @@ export default {
 
         },
 
+        actorFilters() {
+
+            this.showTrendingText = true;
+            this.store.actors = [];
+            this.store.actorName = [];
+
+            let uncompletedAPI = this.store.uncompletedApiCallCredits;
+            let newArray = [];
+
+            this.store.films.forEach((element) => {
+
+                this.store.actorName.push(element.id);
+
+                newArray.push(uncompletedAPI +  element.id + this.store.toCompleteApiCallCredits);
+
+                element.cast = [];
+
+                
+            });
+
+            for (let i = 0; i < newArray.length; i++) {
+                
+                axios.get(newArray[i]).then((res) => {
+                    
+                    res.data.cast.splice(5)
+                    
+                    let actors = res.data.cast.map(actor => actor.name);
+                    
+                    this.store.films[i].cast = actors;
+                    
+                    this.store.actors.push(actors);
+                    
+                    this.showTrendingText = false;
+                    
+                });
+            };
+            
+
+            console.log(this.store.actors);
+        },
+
+
+
     },
 }
 </script>
@@ -100,7 +145,7 @@ export default {
 <template>
 
     <div class="nav-bar">
-        <SearchItem @searchFilm="search()"></SearchItem>
+        <SearchItem @searchFilm="search()" @actorFilters="actorFilters()"></SearchItem>
     </div>
 
     
@@ -110,12 +155,55 @@ export default {
         </div>
 
         <FilmCard v-for="film in store.films" :film="film"></FilmCard>
+
+            
+        <div class="actor-container" v-if="!this.showTrendingText">
+            <div v-for="film in store.films" class="actor-card">
+
+                <div>
+                    <strong>{{film.title }} {{film.name}}</strong>
+                </div>
+
+                <div v-for="actor in film.cast">
+                    <div>{{ actor }}</div>
+                </div>
+                
+            </div>
+        </div>
+
     </div>
 
 </template>
 
 
 <style lang="scss" scoped>
+
+
+.actor-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    gap: 20px;
+
+
+    .actor-card {
+        position: relative;
+        display: flex;
+        align-items: center;
+        flex-flow: column wrap;
+        gap: 20px;
+        width: calc(20% - 30px);
+        height: auto;
+        cursor: pointer;
+        background-color: rgba(56, 56, 56, 0.151);
+        overflow: hidden;
+        padding: 20px;
+
+        strong {
+            font-size: 22px;
+        }
+    }
+}
     .nav-bar {
         position: fixed;
         top: 0;
@@ -129,7 +217,7 @@ export default {
         justify-content: space-around;
         flex-wrap: wrap;
         gap: 20px;
-        margin: -100px 0 50px;
+        margin: -100px 40px 50px;
 
         .trending {
             width: 100%;

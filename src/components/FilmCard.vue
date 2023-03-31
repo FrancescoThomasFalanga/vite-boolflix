@@ -28,7 +28,9 @@ export default {
                 language = "jp";
             } else if(language == "ko") {
                 language = "kr";
-            };
+            } else if(language == "hi") {
+                language = "in"
+            }
 
             return language;
         },
@@ -41,8 +43,7 @@ export default {
             let starsToEmpty = Array(this.stars - newVote).fill(0);
 
             return starsToColor.concat(starsToEmpty);
-        }
-
+        },
     },
 }
 </script>
@@ -96,6 +97,7 @@ export default {
         height: auto;
         cursor: pointer;
         background-color: rgba(56, 56, 56, 0.151);
+        overflow: hidden;
     }
 
     .unknown {

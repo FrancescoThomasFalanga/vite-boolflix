@@ -1,4 +1,5 @@
 <script>
+import axios, { all } from "axios";
 import {store} from "../store.js";
 
 export default {
@@ -46,8 +47,10 @@ export default {
 
         <div class="flex right">
 
+            <button class="search-bar left cast" @click="$emit('actorFilters')">Mostra Il Cast</button>
+
             <div class="flex">
-                <input class="search-bar left" type="text" placeholder="Digita il nome del Film" v-model="store.filmName" @keyup.enter="$emit('searchFilm')">
+                <input class="search-bar left" type="text" placeholder="Digita il nome del Film/Serie" v-model="store.filmName" @keyup.enter="$emit('searchFilm')">
                 <button class="search-bar right" @click="$emit('searchFilm')"><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
 
@@ -91,6 +94,14 @@ export default {
                 border: none;
                 border-top-right-radius: 0;
                 border-bottom-right-radius: 0;
+            }
+
+            .cast {
+                cursor: pointer;
+
+                &:hover {
+                    background-color: rgba(0, 0, 0, 0.466);
+                }
             }
 
             .right {
