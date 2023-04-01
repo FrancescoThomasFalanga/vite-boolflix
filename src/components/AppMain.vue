@@ -3,6 +3,7 @@ import {store} from "../store.js";
 import axios from "axios";
 import SearchItem from "./SearchItem.vue";
 import FilmCard from "./FilmCard.vue";
+import ActorsFiltersItem from "./ActorsFiltersItem.vue";
 
 export default {
     data() {
@@ -15,6 +16,7 @@ export default {
     components: {
         SearchItem,
         FilmCard,
+        ActorsFiltersItem,
     },
 
     created() {
@@ -137,6 +139,8 @@ export default {
 
 
 
+
+
     },
 }
 </script>
@@ -154,21 +158,12 @@ export default {
             In Tendenza Questa Settimana
         </div>
 
-        <FilmCard v-for="film in store.films" :film="film"></FilmCard>
+        <div class="flex">
+            <FilmCard v-for="film in store.films" :film="film" ></FilmCard>
+        </div>
 
-            
-        <div class="actor-container" v-if="!this.showTrendingText">
-            <div v-for="film in store.films" class="actor-card">
-
-                <div>
-                    <strong>{{film.title }} {{film.name}}</strong>
-                </div>
-
-                <div v-for="actor in film.cast">
-                    <div>{{ actor }}</div>
-                </div>
-                
-            </div>
+        <div class="flex">
+            <ActorsFiltersItem v-for="actor in store.films" :actor="actor" v-if="!this.showTrendingText"></ActorsFiltersItem>
         </div>
 
     </div>
@@ -178,32 +173,6 @@ export default {
 
 <style lang="scss" scoped>
 
-
-.actor-container {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-around;
-    gap: 20px;
-
-
-    .actor-card {
-        position: relative;
-        display: flex;
-        align-items: center;
-        flex-flow: column wrap;
-        gap: 20px;
-        width: calc(20% - 30px);
-        height: auto;
-        cursor: pointer;
-        background-color: rgba(56, 56, 56, 0.151);
-        overflow: hidden;
-        padding: 20px;
-
-        strong {
-            font-size: 22px;
-        }
-    }
-}
     .nav-bar {
         position: fixed;
         top: 0;
@@ -214,10 +183,19 @@ export default {
 
     .film-container {
         display: flex;
-        justify-content: space-around;
-        flex-wrap: wrap;
+        flex-wrap:  wrap;
+        flex-direction: column;
         gap: 20px;
         margin: -100px 40px 50px;
+
+        .flex {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+            width: 100%;
+            
+        }
 
         .trending {
             width: 100%;
@@ -229,6 +207,6 @@ export default {
     }
     
     .no-trending {
-        margin: 80px 0;
+        margin: 80px 40px;
     }
 </style>

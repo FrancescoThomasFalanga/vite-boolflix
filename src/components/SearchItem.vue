@@ -80,7 +80,6 @@ export default {
             display: flex;
             justify-content: flex-start;
             align-items: center;
-            background-color: #000000;
     
             img {
                 width: 100px;
@@ -88,7 +87,7 @@ export default {
 
             .search-bar {
                 padding: 6px 10px;
-                background-color: rgba(255, 0, 0, 0.301);
+                background-color: rgba(255, 0, 0, 0.555);
             }
             .left {
                 border: none;
