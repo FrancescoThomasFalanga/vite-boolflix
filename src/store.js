@@ -24,6 +24,13 @@ export const store = reactive({
 
     actorName: [],
 
+
+    links: ["Home", "Serie TV", "Film", "Nuovi e Popolari", "La mia lista", "Sfoglia per lingua"],
+
+    showCast: true,
+
+    isHome: 0,
+
 });
 
 

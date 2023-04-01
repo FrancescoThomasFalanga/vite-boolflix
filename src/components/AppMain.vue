@@ -22,7 +22,9 @@ export default {
     created() {
 
         axios.get(this.store.APIcallTrending).then((res) => {
-
+            
+            
+            this.store.showCast = false;
             this.showTrendingText = true;
             this.store.films = res.data.results;
 
@@ -38,7 +40,8 @@ export default {
 
         search() {
 
-            this.showTrendingText = false;
+            this.store.showCast = false;
+
             let newFilmApiString = this.store.APIcallFilm;
 
             if (!this.store.filmName == "") {
@@ -56,8 +59,6 @@ export default {
                 newFilmApiString = this.store.APIcallTrending;
 
                 this.callApi(newFilmApiString);
-
-                this.showTrendingText = true;
 
             };
 
@@ -78,8 +79,6 @@ export default {
 
                 this.store.APIcallTrending = "";
 
-                this.showTrendingText = false;
-
             };
 
 
@@ -98,9 +97,7 @@ export default {
 
         actorFilters() {
 
-            this.showTrendingText = true;
-            this.store.actors = [];
-            this.store.actorName = [];
+            this.store.showCast = true;
 
             let uncompletedAPI = this.store.uncompletedApiCallCredits;
             let newArray = [];
@@ -128,8 +125,6 @@ export default {
                     
                     this.store.actors.push(actors);
                     
-                    this.showTrendingText = false;
-                    
                 });
             };
             
@@ -153,17 +148,17 @@ export default {
     </div>
 
     
-    <div class="film-container" :class="this.showTrendingText ? '' : 'no-trending' ">
-        <div v-if="this.showTrendingText" class="trending">
+    <div class="film-container">
+        <div class="trending">
             In Tendenza Questa Settimana
         </div>
 
-        <div class="flex">
-            <FilmCard v-for="film in store.films" :film="film" ></FilmCard>
+        <div class="flex" :class="store.showCast ? 'no-all' : 'no-all' ">
+            <FilmCard v-for="film in store.films" :film="film" v-if="!store.showCast"></FilmCard>
         </div>
 
         <div class="flex">
-            <ActorsFiltersItem v-for="actor in store.films" :actor="actor" v-if="!this.showTrendingText"></ActorsFiltersItem>
+            <ActorsFiltersItem v-for="actor in store.films" :actor="actor"></ActorsFiltersItem>
         </div>
 
     </div>
@@ -204,9 +199,9 @@ export default {
             font-weight: bold;
         }
 
-    }
-    
-    .no-trending {
-        margin: 80px 40px;
+        .no-all {
+            margin-top: 110px;
+        }
+
     }
 </style>

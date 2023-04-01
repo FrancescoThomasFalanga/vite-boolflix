@@ -21,23 +21,10 @@ export default {
 
             <div>
                 <ul>
-                    <li>
-                        <a href="#"> Home </a>
-                    </li>
-                    <li>
-                        <a href="#"> Serie TV </a>
-                    </li>
-                    <li>
-                        <a href="#"> Film </a>
-                    </li>
-                    <li>
-                        <a href="#"> Nuovi e Popolari </a>
-                    </li>
-                    <li>
-                        <a href="#"> La mia lista </a>
-                    </li>
-                    <li>
-                        <a href="#"> Sfoglia per lingua </a>
+                    <li v-for="(link, index) in store.links" @click="store.isHome = index" :class="index == store.isHome ? 'active' : '' ">
+                         <a href="#">
+                            {{ link }}
+                        </a> 
                     </li>
                 </ul>
             </div>
@@ -47,7 +34,11 @@ export default {
 
         <div class="flex right">
 
-            <button class="search-bar left cast" @click="$emit('actorFilters')">Mostra Il Cast</button>
+            <div class="actors">
+                <button class="search-bar left cast" @click="$emit('actorFilters')">Cast</button>
+                <button class="search-bar left cast" @click="store.showCast = false">No Cast</button>
+            </div>
+
 
             <div class="flex">
                 <input class="search-bar left" type="text" placeholder="Digita il nome del Film/Serie" v-model="store.filmName" @keyup.enter="$emit('searchFilm')">
@@ -69,12 +60,23 @@ export default {
 
 
 <style lang="scss" scoped>
+
+    .active {
+        font-weight: bold;
+    }
+
+
     
     .flex-main {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin: 0 50px;
+
+        .actors {
+            margin-right: 10px;
+        }
+
 
         .flex {
             display: flex;

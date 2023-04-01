@@ -19,17 +19,22 @@ export default {
 
 
 <template>
-        <div class="actor-card">
+    <div class="actor-card" v-if="store.showCast">
 
-            <div>
-                <strong>{{actor.title }} {{actor.name}}</strong>
-            </div>
-
-            <div v-for="person in actor.cast">
-                <div>{{ person }}</div>
-            </div>
-            
+        <div class="img-hover">
+            <img v-if="!actor.poster_path == '' " :src="this.store.URLimg + actor.poster_path" alt="">
+            <div v-else class="unknown">Immagine non disponibile</div>
         </div>
+
+        <div>
+            <strong>{{actor.title }} {{actor.name}}</strong>
+        </div>
+
+        <div v-for="person in actor.cast">
+            <div>{{ person }}</div>
+        </div>
+        
+    </div>
 </template>
 
 
@@ -48,6 +53,19 @@ export default {
         background-color: rgba(56, 56, 56, 0.151);
         overflow: hidden;
         text-align: center;
+        
+
+        .unknown {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 30px;
+        }
+
+        img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
 
         strong {
             font-size: 22px;
