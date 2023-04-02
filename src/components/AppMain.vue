@@ -132,6 +132,16 @@ export default {
             console.log(this.store.actors);
         },
 
+        scrolll() {
+            var left= document.querySelector(".scroll-images");
+            left.scrollBy(-350, 0)
+        },
+
+        scrollr() {
+            var left= document.querySelector(".scroll-images");
+            left.scrollBy(350, 0)
+        }
+
 
 
 
@@ -153,8 +163,18 @@ export default {
             In Tendenza Questa Settimana
         </div>
 
-        <div class="flex" :class="store.showCast ? 'no-all' : 'no-all' " v-if="!store.showCast">
-            <FilmCard v-for="film in store.films" :film="film"></FilmCard>
+        <div class="main-scroll-div" :class="store.showCast ? 'no-all' : 'no-all' " v-if="!store.showCast">
+            <div>
+                <button class="icon" @click="scrolll()"> <i class="fas fa-angle-double-left"></i> </button>
+            </div>
+            <div class="cover">
+                <div class="scroll-images">
+                    <FilmCard v-for="film in store.films" :film="film" class="child"></FilmCard>
+                </div>
+            </div>
+            <div>
+                <button class="icon" @click="scrollr()"> <i class="fas fa-angle-double-right"></i> </button>
+            </div>
         </div>
 
         <div class="flex" :class="store.showCast ? 'no-all' : 'no-all' ">
@@ -167,6 +187,84 @@ export default {
 
 
 <style lang="scss" scoped>
+
+.main-scroll-div {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .cover {
+    position: relative;
+    width: 90%;
+    height: 50%;
+    
+        &::before {
+            position: absolute;
+            content: "";
+            left: 0;
+            top: 0;
+            z-index: 4;
+            height: 100%;
+            width: 60px;
+            background-image: linear-gradient(90deg, black, transparent);
+        }
+
+        &::after {
+            position: absolute;
+            content: "";
+            right: 0;
+            top: 0;
+            z-index: 4;
+            height: 100%;
+            width: 60px;
+            background-image: linear-gradient(-90deg, black, transparent);
+        }
+
+        .scroll-images {
+            width: 100%;
+            height: auto;
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            overflow: auto;
+            position: relative;
+            scroll-behavior: smooth;
+            .child {
+                min-width: 300px;
+                height: 450px;
+                margin: 1px 10px;
+                cursor: pointer;
+                border: 1px solid white;
+                overflow: hidden;
+            }
+        }
+    
+    }
+
+
+    .scroll-images::-webkit-scrollbar {
+        -webkit-appearance: none;
+    }
+    .child-img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .icon {
+        color: white;
+        background-color: black;
+        font-size: 50px;
+        outline: none;
+        border: none;
+        padding: 0px 20px;
+        cursor: pointer;
+    }
+}
+
+
+
 
     .nav-bar {
         position: fixed;

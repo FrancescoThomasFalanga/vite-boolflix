@@ -93,11 +93,7 @@ export default {
         display: flex;
         flex-flow: column wrap;
         gap: 20px;
-        width: calc(20% - 30px);
-        height: auto;
-        cursor: pointer;
         background-color: rgba(56, 56, 56, 0.151);
-        overflow: hidden;
     }
 
     .unknown {
@@ -134,7 +130,6 @@ export default {
 
     img {
         width: 100%;
-        height: 100%;
         object-fit: cover;
     }
 
