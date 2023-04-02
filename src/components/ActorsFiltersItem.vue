@@ -27,7 +27,7 @@ export default {
         </div>
 
         <div>
-            <strong>{{actor.title }} {{actor.name}}</strong>
+            <span>CAST: </span><strong> {{actor.title }} {{actor.name}}</strong>
         </div>
 
         <div v-for="person in actor.cast">
@@ -44,7 +44,6 @@ export default {
         position: relative;
         display: flex;
         align-items: center;
-        padding: 20px;
         flex-flow: column wrap;
         gap: 20px;
         width: calc(20% - 30px);

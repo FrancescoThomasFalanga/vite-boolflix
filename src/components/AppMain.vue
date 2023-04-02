@@ -149,15 +149,15 @@ export default {
 
     
     <div class="film-container">
-        <div class="trending">
+        <div class="trending" v-if="!store.APIcallTrending == '' ">
             In Tendenza Questa Settimana
         </div>
 
-        <div class="flex" :class="store.showCast ? 'no-all' : 'no-all' ">
-            <FilmCard v-for="film in store.films" :film="film" v-if="!store.showCast"></FilmCard>
+        <div class="flex" :class="store.showCast ? 'no-all' : 'no-all' " v-if="!store.showCast">
+            <FilmCard v-for="film in store.films" :film="film"></FilmCard>
         </div>
 
-        <div class="flex">
+        <div class="flex" :class="store.showCast ? 'no-all' : 'no-all' ">
             <ActorsFiltersItem v-for="actor in store.films" :actor="actor"></ActorsFiltersItem>
         </div>
 
@@ -197,10 +197,11 @@ export default {
             padding-left: 30px;
             font-size: 26px;
             font-weight: bold;
+            margin-bottom: -180px;
         }
 
         .no-all {
-            margin-top: 110px;
+            margin-top: 180px;
         }
 
     }
