@@ -10,6 +10,8 @@ export const store = reactive({
 
     APIcallSeries: "https://api.themoviedb.org/3/search/tv?api_key=6529eb99a13649a95432918926d0d7ce&language=it-IT",
 
+    APIcallGenres: "https://api.themoviedb.org/3/genre/movie/list?api_key=6529eb99a13649a95432918926d0d7ce",
+
     APIquery: "&query=",
 
     filmName: "",
@@ -23,6 +25,7 @@ export const store = reactive({
     actors: [],
 
     actorName: [],
+    
 
 
     links: ["Home", "Serie TV", "Film", "Nuovi e Popolari", "La mia lista", "Sfoglia per lingua"],
@@ -30,15 +33,20 @@ export const store = reactive({
     showCast: true,
 
     isHome: 0,
+    
+
+    genres: [],
+
+    filterGenre: "",
 
 });
 
 
-// https://api.themoviedb.org/3/trending/movie/week?api_key=6529eb99a13649a95432918926d0d7ce&language=it-IT
+// https://api.themoviedb.org/3/trending/movie/week?api_key=6529eb99a13649a95432918926d0d7ce&language=it-IT ||||
 
 
 // CREDITI DEI FILM 
-// https://api.themoviedb.org/3/movie/76600/credits?api_key=6529eb99a13649a95432918926d0d7ce
+// https://api.themoviedb.org/3/movie/76600/credits?api_key=6529eb99a13649a95432918926d0d7ce ||||
 
 
 

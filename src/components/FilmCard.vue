@@ -50,7 +50,7 @@ export default {
 
 
 <template>
-    <div class="card">
+    <div class="card" v-if="film.genre_ids.includes(store.filterGenre) || store.filterGenre == '' ">
 
         <div class="img-hover">
             <img v-if="!film.poster_path == '' " :src="this.store.URLimg + film.poster_path" alt="">

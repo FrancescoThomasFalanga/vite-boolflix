@@ -9,6 +9,23 @@ export default {
         }
     },
 
+    methods: {
+
+        filterForGenres() {
+
+            axios.get(store.APIcallGenres).then((res) => {
+
+                console.log(res.data.genres);
+
+                this.store.genres = res.data.genres;
+
+            });
+            
+
+        },
+
+    },
+
 }
 </script>
 
@@ -39,6 +56,13 @@ export default {
                 <button class="search-bar left cast" @click="store.showCast = false">No Cast</button>
             </div>
 
+            <div class="actors select" @click="filterForGenres()">
+                Filtra per genere:
+                <select name="filtra per:" id="select" class=" left" v-model="store.filterGenre">
+                    <option value=""></option>
+                    <option v-for="genre in store.genres" :value="genre.id"> {{ genre.name }}</option>
+                </select>
+            </div>
 
             <div class="flex">
                 <input class="search-bar left" type="text" placeholder="Digita il nome del Film/Serie" v-model="store.filmName" @keyup.enter="$emit('searchFilm')">
@@ -75,6 +99,12 @@ export default {
 
         .actors {
             margin-right: 10px;
+
+            #select {
+                cursor: pointer;
+                background-color: rgba(255, 0, 0, 0);
+                color: black;
+            }
         }
 
 
@@ -145,6 +175,11 @@ export default {
                 }
             }
         }
+    }
+
+    .select {
+        padding: 2px 10px;
+        background-color: rgba(255, 0, 0, 0.555);
     }
 
 
