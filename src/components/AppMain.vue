@@ -198,7 +198,7 @@ export default {
     .cover {
     position: relative;
     width: 90%;
-    height: 50%;
+    height: 60%;
     
         &::before {
             position: absolute;
@@ -227,13 +227,12 @@ export default {
             height: auto;
             display: flex;
             justify-content: left;
-            align-items: center;
             overflow: auto;
             position: relative;
             scroll-behavior: smooth;
             .child {
                 min-width: 300px;
-                max-height: 450px;
+                min-height: 450px;
                 margin: 1px 10px;
                 cursor: pointer;
                 border: 1px solid white;

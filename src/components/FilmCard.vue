@@ -131,6 +131,7 @@ export default {
 
     img {
         width: 100%;
+        min-height: 500px;
         object-fit: cover;
     }
 
