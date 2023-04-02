@@ -92,6 +92,7 @@ export default {
         position: relative;
         display: flex;
         flex-flow: column wrap;
+        width: calc(20% - 30px);
         gap: 20px;
         background-color: rgba(56, 56, 56, 0.151);
     }
