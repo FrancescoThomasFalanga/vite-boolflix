@@ -233,7 +233,7 @@ export default {
             scroll-behavior: smooth;
             .child {
                 min-width: 300px;
-                height: 450px;
+                max-height: 450px;
                 margin: 1px 10px;
                 cursor: pointer;
                 border: 1px solid white;
