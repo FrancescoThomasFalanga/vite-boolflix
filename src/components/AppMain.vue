@@ -92,6 +92,8 @@ export default {
 
             if (!this.store.filmName == "" && store.isHome == 2) {
 
+                this.store.doNotShowFilm = false;
+
                 let newOnlyFilmApiString = this.store.APIcallFilm;
 
                 newOnlyFilmApiString += `${this.store.APIquery}${this.store.filmName}`;
@@ -103,6 +105,8 @@ export default {
                 });
 
             } else {
+
+                this.store.doNotShowFilm = true;
 
                 let newFilmApiString = this.store.APIcallTrendingMoviesDay;
 
@@ -118,6 +122,7 @@ export default {
 
             if (!this.store.filmName == "" && store.isHome == 1) {
 
+                this.store.doNotShowSeries = false;
                 let newOnlySeriesApiString = this.store.APIcallSeries;
 
                 newOnlySeriesApiString += `${this.store.APIquery}${this.store.filmName}`;
@@ -130,6 +135,7 @@ export default {
 
             } else {
 
+                this.store.doNotShowSeries = true;
                 let newSeriesApiString = this.store.APIcallTrendingSeriesDay;
 
                 axios.get(newSeriesApiString).then((res) => {
@@ -384,7 +390,7 @@ export default {
             <div class="main-scroll-div" :class="store.showCast ? 'some-margin' : 'some-margin' " v-if="!store.showCast && !store.APIcallTrending == '' ">
 
                 <div class="more" v-if="!store.APIcallTrending == '' ">
-                    I film più visti (giornalmente)
+                    <span v-if="store.doNotShowFilm">I film più visti (giornalmente)</span>
                 </div>
                 <div>
                     <button class="icon" @click="scrolll()"> <i class="fas fa-angle-double-left"></i> </button>
@@ -407,7 +413,7 @@ export default {
     
                 <div class="main-scroll-div" :class="store.showCast ? 'some-margin' : 'some-margin' " v-if="!store.showCast && !store.APIcallTrending == ''">
                     <div class="more" v-if="!store.APIcallTrending == '' ">
-                        Le Serie TV più viste (giornalmente)
+                        <span v-if="store.doNotShowSeries">Le Serie TV più viste (giornalmente)</span>
                     </div>
                     <div>
                         <button class="icon" @click="scrolll()"> <i class="fas fa-angle-double-left"></i> </button>

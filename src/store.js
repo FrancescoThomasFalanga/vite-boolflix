@@ -46,7 +46,8 @@ export const store = reactive({
 
     showTrending: true,
 
-    doNotShow: false,
+    doNotShowFilm: true,
+    doNotShowSeries: true,
 
     isHome: 0,
     
