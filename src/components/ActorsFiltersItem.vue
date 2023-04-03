@@ -27,11 +27,15 @@ export default {
         </div>
 
         <div>
-            <span>CAST: </span><strong> {{actor.title }} {{actor.name}}</strong>
+            <span></span><strong> {{actor.title }} {{actor.name}}</strong>
         </div>
 
-        <div v-for="person in actor.cast">
-            <div>{{ person }}</div>
+
+        <div class="cast">
+            <strong>CAST: </strong>
+            <span v-for="person in actor.cast">
+                {{ person }}, 
+            </span>
         </div>
         
     </div>
@@ -52,6 +56,10 @@ export default {
         background-color: rgba(56, 56, 56, 0.151);
         overflow: hidden;
         text-align: center;
+
+        .cast {
+            padding-bottom: 10px;
+        }
         
 
         .unknown {
@@ -67,7 +75,7 @@ export default {
     }
 
         strong {
-            font-size: 22px;
+            font-size: 20px;
         }
     }
     

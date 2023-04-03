@@ -23,7 +23,7 @@ export default {
 <template>
   <div>
 
-    <AppHeader v-if="!store.APIcallTrending == '' "></AppHeader>
+    <AppHeader v-if="!store.APIcallTrending == '' && store.isHome == 0"></AppHeader>
 
     <AppMain></AppMain>
     

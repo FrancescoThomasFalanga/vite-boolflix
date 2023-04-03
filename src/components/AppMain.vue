@@ -23,11 +23,9 @@ export default {
 
         axios.get(this.store.APIcallTrending).then((res) => {
             
-            
             this.store.showCast = false;
             this.showTrendingText = true;
             this.store.films = res.data.results;
-
 
         });
 
@@ -182,11 +180,17 @@ export default {
 
     
     <div class="film-container">
-        <div class="trending" v-if="!store.APIcallTrending == '' ">
+        
+        <div class="flex" :class="store.showCast ? 'no-all' : 'no-all' ">
+            <ActorsFiltersItem v-for="actor in store.films" :actor="actor"></ActorsFiltersItem>
+        </div>
+
+
+        <div class="trending" v-if="!store.APIcallTrending == '' && !store.showCast">
             In Tendenza Questa Settimana
         </div>
 
-        <div class="main-scroll-div" :class="store.showCast ? 'no-all' : 'no-all' " v-if="!store.showCast">
+        <div class="main-scroll-div" :class="store.showCast ? 'no-all' : 'no-all' " v-if="!store.showCast && store.isHome == 0 ">
             <div>
                 <button class="icon" @click="scrolll()"> <i class="fas fa-angle-double-left"></i> </button>
             </div>
@@ -201,7 +205,7 @@ export default {
         </div>
 
 
-        <div class="main-scroll-div" :class="store.showCast ? 'some-margin' : 'some-margin' " v-if="!store.showCast && store.showTrending || store.filmName == ''">
+        <div class="main-scroll-div" :class="store.showCast ? 'some-margin' : 'some-margin' " v-if="!store.showCast && !store.APIcallTrending == ''">
             <div class="more" v-if="!store.APIcallTrending == '' ">
                 I film più visti (giornalmente)
             </div>
@@ -219,7 +223,7 @@ export default {
         </div>
 
 
-        <div class="main-scroll-div" :class="store.showCast ? 'some-margin' : 'some-margin' " v-if="!store.showCast && store.showTrending || store.filmName == '' ">
+        <div class="main-scroll-div" :class="store.showCast ? 'some-margin' : 'some-margin' " v-if="!store.showCast && !store.APIcallTrending == ''">
             <div class="more" v-if="!store.APIcallTrending == '' ">
                 Le Serie TV più viste (giornalmente)
             </div>
@@ -234,11 +238,6 @@ export default {
             <div>
                 <button class="icon" @click="scrollr()"> <i class="fas fa-angle-double-right"></i> </button>
             </div>
-        </div>
-
-
-        <div class="flex" :class="store.showCast ? 'no-all' : 'no-all' ">
-            <ActorsFiltersItem v-for="actor in store.films" :actor="actor"></ActorsFiltersItem>
         </div>
 
     </div>
