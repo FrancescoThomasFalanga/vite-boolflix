@@ -18,7 +18,9 @@ export const store = reactive({
 
     APIcallSeries: "https://api.themoviedb.org/3/search/tv?api_key=6529eb99a13649a95432918926d0d7ce&language=it-IT",
 
-    APIcallGenres: "https://api.themoviedb.org/3/genre/movie/list?api_key=6529eb99a13649a95432918926d0d7ce",
+    APIcallGenreMovies: "https://api.themoviedb.org/3/genre/movie/list?api_key=6529eb99a13649a95432918926d0d7ce",
+
+    APIcallGenreSeries: "https://api.themoviedb.org/3/genre/tv/list?api_key=6529eb99a13649a95432918926d0d7ce",
 
     APIquery: "&query=",
 
@@ -52,7 +54,8 @@ export const store = reactive({
     isHome: 0,
     
 
-    genres: [],
+    genreFilms: [],
+    genreSeries: [],
 
     filterGenre: "",
 

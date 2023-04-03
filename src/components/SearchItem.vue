@@ -13,17 +13,16 @@ export default {
 
         filterForGenres() {
 
-            axios.get(store.APIcallGenres).then((res) => {
-
+            axios.get(store.APIcallGenreMovies).then((res) => {
                 console.log(res.data.genres);
-
-                this.store.genres = res.data.genres;
-
+                this.store.genreFilms = res.data.genres;
             });
-            
 
+            axios.get(store.APIcallGenreSeries).then((res) => {
+                console.log(res.data.genres);
+                this.store.genreSeries = res.data.genres;
+            });
         },
-
     },
 
 }
@@ -56,13 +55,23 @@ export default {
                 <button class="search-bar left cast" @click="store.showCast = false">No Cast</button>
             </div>
 
-            <div class="actors select" @click="filterForGenres()">
+            
+            <div class="actors select" @click="filterForGenres()" v-if="store.isHome == 1">
                 Filtra per genere:
                 <select name="filtra per:" id="select" class=" left" v-model="store.filterGenre">
                     <option value=""></option>
-                    <option v-for="genre in store.genres" :value="genre.id"> {{ genre.name }}</option>
+                    <option v-for="genre in store.genreSeries" :value="genre.id"> {{ genre.name }}</option>
                 </select>
             </div>
+
+            <div class="actors select" @click="filterForGenres()" v-if="store.isHome == 2">
+                Filtra per genere:
+                <select name="filtra per:" id="select" class=" left" v-model="store.filterGenre">
+                    <option value=""></option>
+                    <option v-for="genre in store.genreFilms" :value="genre.id"> {{ genre.name }}</option>
+                </select>
+            </div>
+
 
             <div class="flex">
                 <input class="search-bar left" type="text" placeholder="Digita il nome del Film/Serie" v-model="store.filmName" @keyup.enter="$emit('searchFilm')">

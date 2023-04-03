@@ -50,7 +50,7 @@ export default {
 
 
 <template>
-    <div class="card" v-if="all.genre_ids.includes(store.filterGenre) || store.filterGenre == '' ">
+    <div class="card">
 
         <div class="img-hover">
             <img v-if="!all.poster_path == '' " :src="this.store.URLimg + all.poster_path" alt="">
