@@ -180,9 +180,19 @@ export default {
 
     
     <div class="film-container">
-        
-        <div class="flex" :class="store.showCast ? 'no-all' : 'no-all' ">
-            <ActorsFiltersItem v-for="actor in store.films" :actor="actor"></ActorsFiltersItem>
+
+        <div class="main-scroll-div" :class="store.showCast ? 'no-all' : 'no-all' " v-if="store.showCast">
+            <div>
+                <button class="icon" @click="scrolll()"> <i class="fas fa-angle-double-left"></i> </button>
+            </div>
+            <div class="cover">
+                <div class="scroll-images">
+                    <ActorsFiltersItem v-for="actor in store.films" :actor="actor" class="child"></ActorsFiltersItem>
+                </div>
+            </div>
+            <div>
+                <button class="icon" @click="scrollr()"> <i class="fas fa-angle-double-right"></i> </button>
+            </div>
         </div>
 
 
@@ -204,40 +214,46 @@ export default {
             </div>
         </div>
 
+        <div v-if="store.isHome == 2 || store.isHome == 0" class="main-scroll-div" :class="store.isHome == 2 ? 'no-all-plus' : '' ">
 
-        <div class="main-scroll-div" :class="store.showCast ? 'some-margin' : 'some-margin' " v-if="!store.showCast && !store.APIcallTrending == ''">
-            <div class="more" v-if="!store.APIcallTrending == '' ">
-                I film più visti (giornalmente)
-            </div>
-            <div>
-                <button class="icon" @click="scrolll()"> <i class="fas fa-angle-double-left"></i> </button>
-            </div>
-            <div class="cover">
-                <div class="scroll-images">
-                    <FilmCard v-for="film in store.trendingMovies" :film="film" class="child"></FilmCard>
+            <div class="main-scroll-div" :class="store.showCast ? 'some-margin' : 'some-margin' " v-if="!store.showCast && !store.APIcallTrending == ''">
+                <div class="more" v-if="!store.APIcallTrending == '' ">
+                    I film più visti (giornalmente)
+                </div>
+                <div>
+                    <button class="icon" @click="scrolll()"> <i class="fas fa-angle-double-left"></i> </button>
+                </div>
+                <div class="cover">
+                    <div class="scroll-images">
+                        <FilmCard v-for="film in store.trendingMovies" :film="film" class="child"></FilmCard>
+                    </div>
+                </div>
+                <div>
+                    <button class="icon" @click="scrollr()"> <i class="fas fa-angle-double-right"></i> </button>
                 </div>
             </div>
-            <div>
-                <button class="icon" @click="scrollr()"> <i class="fas fa-angle-double-right"></i> </button>
-            </div>
+
         </div>
 
+        <div v-if="store.isHome == 1 || store.isHome == 0" class="main-scroll-div" :class="store.isHome == 1 ? 'no-all-plus' : '' ">
 
-        <div class="main-scroll-div" :class="store.showCast ? 'some-margin' : 'some-margin' " v-if="!store.showCast && !store.APIcallTrending == ''">
-            <div class="more" v-if="!store.APIcallTrending == '' ">
-                Le Serie TV più viste (giornalmente)
-            </div>
-            <div>
-                <button class="icon" @click="scrolll()"> <i class="fas fa-angle-double-left"></i> </button>
-            </div>
-            <div class="cover">
-                <div class="scroll-images">
-                    <FilmCard v-for="film in store.trendingSeries" :film="film" class="child"></FilmCard>
+            <div class="main-scroll-div" :class="store.showCast ? 'some-margin' : 'some-margin' " v-if="!store.showCast && !store.APIcallTrending == ''">
+                <div class="more" v-if="!store.APIcallTrending == '' ">
+                    Le Serie TV più viste (giornalmente)
+                </div>
+                <div>
+                    <button class="icon" @click="scrolll()"> <i class="fas fa-angle-double-left"></i> </button>
+                </div>
+                <div class="cover">
+                    <div class="scroll-images">
+                        <FilmCard v-for="film in store.trendingSeries" :film="film" class="child"></FilmCard>
+                    </div>
+                </div>
+                <div>
+                    <button class="icon" @click="scrollr()"> <i class="fas fa-angle-double-right"></i> </button>
                 </div>
             </div>
-            <div>
-                <button class="icon" @click="scrollr()"> <i class="fas fa-angle-double-right"></i> </button>
-            </div>
+
         </div>
 
     </div>
@@ -374,6 +390,10 @@ export default {
 
         .no-all {
             margin-top: 180px;
+        }
+
+        .no-all-plus {
+            margin-top: 300px;
         }
 
     }
