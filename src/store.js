@@ -4,6 +4,8 @@ export const store = reactive({
 
     films: [],
 
+    onlyFilms: [],
+
     series: [],
 
     APIcallTrending: "https://api.themoviedb.org/3/trending/all/week?api_key=6529eb99a13649a95432918926d0d7ce&language=it-IT",
@@ -52,10 +54,6 @@ export const store = reactive({
     genres: [],
 
     filterGenre: "",
-
-    trendingMovies: [],
-
-    trendingSeries: [],
 
 });
 

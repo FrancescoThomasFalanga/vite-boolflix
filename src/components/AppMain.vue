@@ -2,7 +2,9 @@
 import {store} from "../store.js";
 import axios from "axios";
 import SearchItem from "./SearchItem.vue";
+import AllCard from "./AllCard.vue";
 import FilmCard from "./FilmCard.vue";
+import SeriesCard from "./SeriesCard.vue";
 import ActorsFiltersItem from "./ActorsFiltersItem.vue";
 
 export default {
@@ -15,7 +17,9 @@ export default {
 
     components: {
         SearchItem,
+        AllCard,
         FilmCard,
+        SeriesCard,
         ActorsFiltersItem,
     },
 
@@ -42,12 +46,11 @@ export default {
         search() {
 
             this.store.showTrending = false;
-
             this.store.showCast = false;
 
             let newFilmApiString = this.store.APIcallFilm;
 
-            if (!this.store.filmName == "") {
+            if (!this.store.filmName == "" && store.isHome == 0) {
 
                 newFilmApiString += `${this.store.APIquery}${this.store.filmName}`;
 
@@ -68,7 +71,7 @@ export default {
 
             let newSeriesApiString = this.store.APIcallSeries;
 
-            if (!this.store.filmName == "") {
+            if (!this.store.filmName == "" && store.isHome == 0) {
 
                 newSeriesApiString += `${this.store.APIquery}${this.store.filmName}`;
 
@@ -86,6 +89,57 @@ export default {
             };
 
 
+
+            if (!this.store.filmName == "" && store.isHome == 2) {
+
+                let newOnlyFilmApiString = this.store.APIcallFilm;
+
+                newOnlyFilmApiString += `${this.store.APIquery}${this.store.filmName}`;
+
+                axios.get(newOnlyFilmApiString).then((res) => {
+
+                    this.store.onlyFilms = res.data.results;
+
+                });
+
+            } else {
+
+                let newFilmApiString = this.store.APIcallTrendingMoviesDay;
+
+                axios.get(newFilmApiString).then((res) => {
+
+                    this.store.onlyFilms = res.data.results;
+
+                })
+
+            };
+
+
+
+            if (!this.store.filmName == "" && store.isHome == 1) {
+
+                let newOnlySeriesApiString = this.store.APIcallSeries;
+
+                newOnlySeriesApiString += `${this.store.APIquery}${this.store.filmName}`;
+
+                axios.get(newOnlySeriesApiString).then((res) => {
+
+                    this.store.series = res.data.results;
+
+                });
+
+            } else {
+
+                let newSeriesApiString = this.store.APIcallTrendingSeriesDay;
+
+                axios.get(newSeriesApiString).then((res) => {
+
+                    this.store.series = res.data.results;
+
+                });
+
+            };
+
         },
 
         callApi(string) {
@@ -101,40 +155,115 @@ export default {
 
         actorFilters() {
 
-            this.store.showCast = true;
-
             let uncompletedAPI = this.store.uncompletedApiCallCredits;
             let newArray = [];
 
-            this.store.films.forEach((element) => {
+            this.store.showCast = true;
 
-                this.store.actorName.push(element.id);
 
-                newArray.push(uncompletedAPI +  element.id + this.store.toCompleteApiCallCredits);
+            if (store.isHome == 0) {
 
-                element.cast = [];
+                uncompletedAPI = this.store.uncompletedApiCallCredits;
+                newArray = [];
 
-                
-            });
-
-            for (let i = 0; i < newArray.length; i++) {
-                
-                axios.get(newArray[i]).then((res) => {
-                    
-                    res.data.cast.splice(5)
-                    
-                    let actors = res.data.cast.map(actor => actor.name);
-                    
-                    this.store.films[i].cast = actors;
-                    this.store.trendingMovies[i].cast = actors;
-                    this.store.trendingSeries[i].cast = actors;
-                    
-                    this.store.actors.push(actors);
-                    this.store.filmActors.push(actors);
-                    this.store.seriesActors.push(actors);
+                this.store.films.forEach((element) => {
+    
+                    this.store.actorName.push(element.id);
+    
+                    newArray.push(uncompletedAPI +  element.id + this.store.toCompleteApiCallCredits);
+    
+                    element.cast = [];
+    
                     
                 });
+    
+                for (let i = 0; i < newArray.length; i++) {
+                    
+                    axios.get(newArray[i]).then((res) => {
+                        
+                        res.data.cast.splice(5)
+                        
+                        let actors = res.data.cast.map(actor => actor.name);
+                        
+                        this.store.films[i].cast = actors;
+                        this.store.actors.push(actors);
+    
+                        
+                    });
+                };
+                
             };
+
+
+            if (store.isHome == 1 || store.isHome == 0) {
+
+                uncompletedAPI = this.store.uncompletedApiCallCredits;
+                newArray = [];
+
+                this.store.onlyFilms.forEach((element) => {
+
+                    this.store.actorName.push(element.id);
+
+                    newArray.push(uncompletedAPI +  element.id + this.store.toCompleteApiCallCredits);
+
+                    element.cast = [];
+
+                    
+                });
+
+                for (let i = 0; i < newArray.length; i++) {
+                    
+                    axios.get(newArray[i]).then((res) => {
+                        
+                        res.data.cast.splice(5)
+                        
+                        let actors = res.data.cast.map(actor => actor.name);
+                        
+                        this.store.onlyFilms[i].cast = actors;
+                        this.store.filmActors.push(actors);
+
+                        
+                    });
+                };
+
+            };
+
+
+            if (store.isHome == 2 || store.isHome == 0) {
+
+                uncompletedAPI = "https://api.themoviedb.org/3/tv/";
+                newArray = [];
+
+                this.store.series.forEach((element) => {
+
+                    this.store.actorName.push(element.id);
+
+                    newArray.push(uncompletedAPI +  element.id + this.store.toCompleteApiCallCredits);
+
+                    element.cast = [];
+                    
+                });
+
+                for (let i = 0; i < newArray.length; i++) {
+
+                    
+                    axios.get(newArray[i]).then((res) => {
+                        
+                        res.data.cast.splice(5)
+                        
+                        let actorSeries = res.data.cast.map(actor => actor.name);
+                        
+                        this.store.series[i].cast = actorSeries;
+                        this.store.seriesActors.push(actorSeries);
+
+                        
+                    });
+                };
+
+            };
+
+    
+
             
 
             console.log(this.store.actors);
@@ -156,7 +285,7 @@ export default {
             let newFilmApiString = this.store.APIcallTrendingMoviesDay;
 
             axios.get(newFilmApiString).then((res) => {
-                this.store.trendingMovies = res.data.results;
+                this.store.onlyFilms = res.data.results;
             });
 
         },
@@ -167,8 +296,9 @@ export default {
             let newFilmApiString = this.store.APIcallTrendingSeriesDay;
 
             axios.get(newFilmApiString).then((res) => {
-                this.store.trendingSeries = res.data.results;
+                this.store.series = res.data.results;
             });
+
         },
 
     },
@@ -182,7 +312,7 @@ export default {
         <SearchItem @searchFilm="search()" @actorFilters="actorFilters()"></SearchItem>
     </div>
 
-    
+
     <div class="film-container">
 
         <div class="main-scroll-div" :class="store.showCast ? 'no-all' : 'no-all' " v-if="store.showCast && store.isHome == 0">
@@ -199,13 +329,13 @@ export default {
             </div>
         </div>
 
-        <div class="main-scroll-div" :class="store.showCast ? 'no-all' : 'no-all' " v-if="store.showCast && store.isHome == 2 || store.showCast && store.isHome == 0">
+        <div class="main-scroll-div" :class="store.showCast ? 'no-all' : 'no-all' " v-if="store.showCast && store.isHome == 2 || store.showCast && store.isHome == 0 && store.filmName == '' ">
             <div>
                 <button class="icon" @click="scrolll()"> <i class="fas fa-angle-double-left"></i> </button>
             </div>
             <div class="cover">
                 <div class="scroll-images">
-                    <ActorsFiltersItem v-for="actor in store.trendingMovies" :actor="actor" class="child"></ActorsFiltersItem>
+                    <ActorsFiltersItem v-for="actor in store.onlyFilms" :actor="actor" class="child"></ActorsFiltersItem>
                 </div>
             </div>
             <div>
@@ -213,20 +343,19 @@ export default {
             </div>
         </div>
 
-        <div class="main-scroll-div" :class="store.showCast ? 'no-all' : 'no-all' " v-if="store.showCast && store.isHome == 1 || store.showCast && store.isHome == 0">
+        <div class="main-scroll-div" :class="store.showCast ? 'no-all' : 'no-all' " v-if="store.showCast && store.isHome == 1 || store.showCast && store.isHome == 0 && store.filmName == '' ">
             <div>
                 <button class="icon" @click="scrolll()"> <i class="fas fa-angle-double-left"></i> </button>
             </div>
             <div class="cover">
                 <div class="scroll-images">
-                    <ActorsFiltersItem v-for="actor in store.trendingSeries" :actor="actor" class="child"></ActorsFiltersItem>
+                    <ActorsFiltersItem v-for="actor in store.series" :actor="actor" class="child"></ActorsFiltersItem>
                 </div>
             </div>
             <div>
                 <button class="icon" @click="scrollr()"> <i class="fas fa-angle-double-right"></i> </button>
             </div>
         </div>
-
 
 
 
@@ -235,13 +364,13 @@ export default {
             In Tendenza Questa Settimana
         </div>
 
-        <div class="main-scroll-div" :class="store.showCast ? 'no-all' : 'no-all' " v-if="!store.showCast && store.isHome == 0 || store.doNotShow && store.isHome == 1 || store.doNotShow && store.isHome == 2">
+        <div class="main-scroll-div" :class="store.showCast ? 'no-all' : 'no-all' " v-if="!store.showCast && store.isHome == 0">
             <div>
                 <button class="icon" @click="scrolll()"> <i class="fas fa-angle-double-left"></i> </button>
             </div>
             <div class="cover">
                 <div class="scroll-images">
-                    <FilmCard v-for="film in store.films" :film="film" class="child"></FilmCard>
+                    <AllCard v-for="all in store.films" :all="all" class="child"></AllCard>
                 </div>
             </div>
             <div>
@@ -251,25 +380,6 @@ export default {
 
 
         <div v-if="store.isHome == 2 || store.isHome == 0" class="main-scroll-div column" :class="store.isHome == 2 ? 'no-all-plus' : '' ">
-
-            <div class="main-scroll-div" :class="store.showCast ? 'some-margin' : 'some-margin' " v-if="!store.showCast && !store.APIcallTrending == '' && store.isHome == 2 ">
-            
-                <div class="more" v-if="!store.APIcallTrending == '' ">
-                    In Tendenza Questa Settimana
-                </div>
-                <div>
-                    <button class="icon" @click="scrolll()"> <i class="fas fa-angle-double-left"></i> </button>
-                </div>
-                <div class="cover">
-                    <div class="scroll-images">
-                        <FilmCard v-for="film in store.films" :film="film" class="child"></FilmCard>
-                    </div>
-                </div>
-                <div>
-                    <button class="icon" @click="scrollr()"> <i class="fas fa-angle-double-right"></i> </button>
-                </div>
-
-            </div>
 
             <div class="main-scroll-div" :class="store.showCast ? 'some-margin' : 'some-margin' " v-if="!store.showCast && !store.APIcallTrending == '' ">
 
@@ -281,7 +391,7 @@ export default {
                 </div>
                 <div class="cover">
                     <div class="scroll-images">
-                        <FilmCard v-for="film in store.trendingMovies" :film="film" class="child"></FilmCard>
+                        <FilmCard v-for="film in store.onlyFilms" :film="film" class="child"></FilmCard>
                     </div>
                 </div>
                 <div>
@@ -289,27 +399,29 @@ export default {
                 </div>
             </div>
 
-
         </div>
         
+        <div v-if="store.isHome == 1 || store.isHome == 0" class="main-scroll-div column">
 
-        <div v-if="store.isHome == 1 || store.isHome == 0" class="main-scroll-div" :class="store.isHome == 1 ? 'no-all-plus' : '' ">
-
-            <div class="main-scroll-div" :class="store.showCast ? 'some-margin' : 'some-margin' " v-if="!store.showCast && !store.APIcallTrending == ''">
-                <div class="more" v-if="!store.APIcallTrending == '' ">
-                    Le Serie TV più viste (giornalmente)
-                </div>
-                <div>
-                    <button class="icon" @click="scrolll()"> <i class="fas fa-angle-double-left"></i> </button>
-                </div>
-                <div class="cover">
-                    <div class="scroll-images">
-                        <FilmCard v-for="film in store.trendingSeries" :film="film" class="child"></FilmCard>
+            <div v-if="!store.showCast && !store.APIcallTrending == '' " class="main-scroll-div" :class="store.isHome == 1 ? 'no-all-plus' : '' ">
+    
+                <div class="main-scroll-div" :class="store.showCast ? 'some-margin' : 'some-margin' " v-if="!store.showCast && !store.APIcallTrending == ''">
+                    <div class="more" v-if="!store.APIcallTrending == '' ">
+                        Le Serie TV più viste (giornalmente)
+                    </div>
+                    <div>
+                        <button class="icon" @click="scrolll()"> <i class="fas fa-angle-double-left"></i> </button>
+                    </div>
+                    <div class="cover">
+                        <div class="scroll-images">
+                            <SeriesCard v-for="series in store.series" :series="series" class="child"></SeriesCard>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="icon" @click="scrollr()"> <i class="fas fa-angle-double-right"></i> </button>
                     </div>
                 </div>
-                <div>
-                    <button class="icon" @click="scrollr()"> <i class="fas fa-angle-double-right"></i> </button>
-                </div>
+    
             </div>
 
         </div>
