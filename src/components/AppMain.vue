@@ -31,6 +31,9 @@ export default {
 
         });
 
+        this.trendingMovies();
+        this.trendingSeries();
+
     },
 
     props: {
@@ -39,6 +42,8 @@ export default {
     methods: {
 
         search() {
+
+            this.store.showTrending = false;
 
             this.store.showCast = false;
 
@@ -72,7 +77,8 @@ export default {
                 axios.get(newSeriesApiString).then((res) => {
     
                     res.data.results.forEach(result => {
-                        this.store.films.push(result);
+                        this.store.series = result;
+                        this.store.films.push(store.series);
                     })
     
                 });
@@ -140,11 +146,28 @@ export default {
         scrollr() {
             var left= document.querySelector(".scroll-images");
             left.scrollBy(350, 0)
-        }
+        },
 
+        trendingMovies() {
 
+            this.store.showCast = false;
+            let newFilmApiString = this.store.APIcallTrendingMoviesDay;
 
+            axios.get(newFilmApiString).then((res) => {
+                this.store.trendingMovies = res.data.results;
+            });
 
+        },
+
+        trendingSeries() {
+
+            this.store.showCast = false;
+            let newFilmApiString = this.store.APIcallTrendingSeriesDay;
+
+            axios.get(newFilmApiString).then((res) => {
+                this.store.trendingSeries = res.data.results;
+            });
+        },
 
     },
 }
@@ -177,6 +200,43 @@ export default {
             </div>
         </div>
 
+
+        <div class="main-scroll-div" :class="store.showCast ? 'some-margin' : 'some-margin' " v-if="!store.showCast && store.showTrending || store.filmName == ''">
+            <div class="more" v-if="!store.APIcallTrending == '' ">
+                I film più visti (giornalmente)
+            </div>
+            <div>
+                <button class="icon" @click="scrolll()"> <i class="fas fa-angle-double-left"></i> </button>
+            </div>
+            <div class="cover">
+                <div class="scroll-images">
+                    <FilmCard v-for="film in store.trendingMovies" :film="film" class="child"></FilmCard>
+                </div>
+            </div>
+            <div>
+                <button class="icon" @click="scrollr()"> <i class="fas fa-angle-double-right"></i> </button>
+            </div>
+        </div>
+
+
+        <div class="main-scroll-div" :class="store.showCast ? 'some-margin' : 'some-margin' " v-if="!store.showCast && store.showTrending || store.filmName == '' ">
+            <div class="more" v-if="!store.APIcallTrending == '' ">
+                Le Serie TV più viste (giornalmente)
+            </div>
+            <div>
+                <button class="icon" @click="scrolll()"> <i class="fas fa-angle-double-left"></i> </button>
+            </div>
+            <div class="cover">
+                <div class="scroll-images">
+                    <FilmCard v-for="film in store.trendingSeries" :film="film" class="child"></FilmCard>
+                </div>
+            </div>
+            <div>
+                <button class="icon" @click="scrollr()"> <i class="fas fa-angle-double-right"></i> </button>
+            </div>
+        </div>
+
+
         <div class="flex" :class="store.showCast ? 'no-all' : 'no-all' ">
             <ActorsFiltersItem v-for="actor in store.films" :actor="actor"></ActorsFiltersItem>
         </div>
@@ -188,7 +248,23 @@ export default {
 
 <style lang="scss" scoped>
 
+.more {
+    position: absolute;
+    top: -50px;
+    left: 0;
+    padding-left: 30px;
+    font-weight: bold;
+    font-size: 26px;
+}
+
+.some-margin {
+    margin-top: 80px;
+}
+
+
+
 .main-scroll-div {
+    position: relative;
     width: 100%;
     height: 100%;
     display: flex;
@@ -268,7 +344,7 @@ export default {
     .nav-bar {
         position: fixed;
         top: 0;
-        z-index: 3;
+        z-index: 5;
         width: 100%;
         background-color: black;
     }

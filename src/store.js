@@ -4,7 +4,13 @@ export const store = reactive({
 
     films: [],
 
+    series: [],
+
     APIcallTrending: "https://api.themoviedb.org/3/trending/all/week?api_key=6529eb99a13649a95432918926d0d7ce&language=it-IT",
+
+    APIcallTrendingMoviesDay: "https://api.themoviedb.org/3/trending/movie/day?api_key=6529eb99a13649a95432918926d0d7ce",
+
+    APIcallTrendingSeriesDay: "https://api.themoviedb.org/3/trending/tv/day?api_key=6529eb99a13649a95432918926d0d7ce",
 
     APIcallFilm: "https://api.themoviedb.org/3/search/movie?api_key=6529eb99a13649a95432918926d0d7ce&language=it-IT",
 
@@ -32,12 +38,18 @@ export const store = reactive({
 
     showCast: true,
 
+    showTrending: true,
+
     isHome: 0,
     
 
     genres: [],
 
     filterGenre: "",
+
+    trendingMovies: [],
+
+    trendingSeries: [],
 
 });
 
@@ -52,3 +64,6 @@ export const store = reactive({
 
 // GENERI DEI FILM (per le serie tv sostituire movie con tv)
 // https://api.themoviedb.org/3/genre/movie/list?api_key=6529eb99a13649a95432918926d0d7ce
+
+
+// https://api.themoviedb.org/3/trending/movie/day?api_key=6529eb99a13649a95432918926d0d7ce
