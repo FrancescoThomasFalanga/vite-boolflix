@@ -126,8 +126,12 @@ export default {
                     let actors = res.data.cast.map(actor => actor.name);
                     
                     this.store.films[i].cast = actors;
+                    this.store.trendingMovies[i].cast = actors;
+                    this.store.trendingSeries[i].cast = actors;
                     
                     this.store.actors.push(actors);
+                    this.store.filmActors.push(actors);
+                    this.store.seriesActors.push(actors);
                     
                 });
             };
@@ -181,7 +185,7 @@ export default {
     
     <div class="film-container">
 
-        <div class="main-scroll-div" :class="store.showCast ? 'no-all' : 'no-all' " v-if="store.showCast">
+        <div class="main-scroll-div" :class="store.showCast ? 'no-all' : 'no-all' " v-if="store.showCast && store.isHome == 0">
             <div>
                 <button class="icon" @click="scrolll()"> <i class="fas fa-angle-double-left"></i> </button>
             </div>
@@ -195,12 +199,43 @@ export default {
             </div>
         </div>
 
+        <div class="main-scroll-div" :class="store.showCast ? 'no-all' : 'no-all' " v-if="store.showCast && store.isHome == 2 || store.showCast && store.isHome == 0">
+            <div>
+                <button class="icon" @click="scrolll()"> <i class="fas fa-angle-double-left"></i> </button>
+            </div>
+            <div class="cover">
+                <div class="scroll-images">
+                    <ActorsFiltersItem v-for="actor in store.trendingMovies" :actor="actor" class="child"></ActorsFiltersItem>
+                </div>
+            </div>
+            <div>
+                <button class="icon" @click="scrollr()"> <i class="fas fa-angle-double-right"></i> </button>
+            </div>
+        </div>
+
+        <div class="main-scroll-div" :class="store.showCast ? 'no-all' : 'no-all' " v-if="store.showCast && store.isHome == 1 || store.showCast && store.isHome == 0">
+            <div>
+                <button class="icon" @click="scrolll()"> <i class="fas fa-angle-double-left"></i> </button>
+            </div>
+            <div class="cover">
+                <div class="scroll-images">
+                    <ActorsFiltersItem v-for="actor in store.trendingSeries" :actor="actor" class="child"></ActorsFiltersItem>
+                </div>
+            </div>
+            <div>
+                <button class="icon" @click="scrollr()"> <i class="fas fa-angle-double-right"></i> </button>
+            </div>
+        </div>
+
+
+
+
 
         <div class="trending" v-if="!store.APIcallTrending == '' && !store.showCast">
             In Tendenza Questa Settimana
         </div>
 
-        <div class="main-scroll-div" :class="store.showCast ? 'no-all' : 'no-all' " v-if="!store.showCast && store.isHome == 0 ">
+        <div class="main-scroll-div" :class="store.showCast ? 'no-all' : 'no-all' " v-if="!store.showCast && store.isHome == 0 || store.doNotShow && store.isHome == 1 || store.doNotShow && store.isHome == 2">
             <div>
                 <button class="icon" @click="scrolll()"> <i class="fas fa-angle-double-left"></i> </button>
             </div>
@@ -214,9 +249,30 @@ export default {
             </div>
         </div>
 
-        <div v-if="store.isHome == 2 || store.isHome == 0" class="main-scroll-div" :class="store.isHome == 2 ? 'no-all-plus' : '' ">
 
-            <div class="main-scroll-div" :class="store.showCast ? 'some-margin' : 'some-margin' " v-if="!store.showCast && !store.APIcallTrending == ''">
+        <div v-if="store.isHome == 2 || store.isHome == 0" class="main-scroll-div column" :class="store.isHome == 2 ? 'no-all-plus' : '' ">
+
+            <div class="main-scroll-div" :class="store.showCast ? 'some-margin' : 'some-margin' " v-if="!store.showCast && !store.APIcallTrending == '' && store.isHome == 2 ">
+            
+                <div class="more" v-if="!store.APIcallTrending == '' ">
+                    In Tendenza Questa Settimana
+                </div>
+                <div>
+                    <button class="icon" @click="scrolll()"> <i class="fas fa-angle-double-left"></i> </button>
+                </div>
+                <div class="cover">
+                    <div class="scroll-images">
+                        <FilmCard v-for="film in store.films" :film="film" class="child"></FilmCard>
+                    </div>
+                </div>
+                <div>
+                    <button class="icon" @click="scrollr()"> <i class="fas fa-angle-double-right"></i> </button>
+                </div>
+
+            </div>
+
+            <div class="main-scroll-div" :class="store.showCast ? 'some-margin' : 'some-margin' " v-if="!store.showCast && !store.APIcallTrending == '' ">
+
                 <div class="more" v-if="!store.APIcallTrending == '' ">
                     I film più visti (giornalmente)
                 </div>
@@ -233,7 +289,9 @@ export default {
                 </div>
             </div>
 
+
         </div>
+        
 
         <div v-if="store.isHome == 1 || store.isHome == 0" class="main-scroll-div" :class="store.isHome == 1 ? 'no-all-plus' : '' ">
 
@@ -276,7 +334,9 @@ export default {
     margin-top: 80px;
 }
 
-
+.column {
+    flex-direction: column;
+}
 
 .main-scroll-div {
     position: relative;

@@ -30,6 +30,10 @@ export const store = reactive({
 
     actors: [],
 
+    filmActors: [],
+
+    seriesActors: [],
+
     actorName: [],
     
 
@@ -39,6 +43,8 @@ export const store = reactive({
     showCast: true,
 
     showTrending: true,
+
+    doNotShow: false,
 
     isHome: 0,
     
