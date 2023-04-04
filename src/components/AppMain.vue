@@ -275,37 +275,17 @@ export default {
 
 
 
-        // SOME functions for horizzontal scroll 
-        scrolll() {
-            var left = document.querySelector(".scroll-images");
-            left.scrollBy(-350, 0);
+        // functions for horizzontal scroll 
+        scrolll(string) {
+            var left = document.querySelector(string);
+            left.scrollBy(-550, 0);
         },
 
-        scrolll1() {
-            var left1 = document.querySelector(".scroll-images1");
-            left1.scrollBy(-350, 0);
+        scrollr(string) {
+            var left = document.querySelector(string);
+            left.scrollBy(550, 0);
         },
-
-        scrolll2() {
-            var left2 = document.querySelector(".scroll-images2");
-            left2.scrollBy(-350, 0);
-        },
-
-        scrollr() {
-            var left = document.querySelector(".scroll-images");
-            left.scrollBy(350, 0);
-        },
-
-        scrollr1() {
-            var left1 = document.querySelector(".scroll-images1");
-            left1.scrollBy(350, 0);
-        },
-
-        scrollr2() {
-            var left2 = document.querySelector(".scroll-images2");
-            left2.scrollBy(350, 0);
-        },
-        // /SOME functions for horizzontal scroll
+        // /functions for horizzontal scroll
 
 
 
@@ -354,7 +334,7 @@ export default {
         <div class="main-scroll-div" :class="store.showCast ? 'no-all' : 'no-all'"
             v-if="store.showCast && store.isHome == 0">
             <div>
-                <button class="icon" @click="scrolll()"> <i class="fas fa-angle-double-left"></i> </button>
+                <button class="icon" @click="scrolll('.scroll-images')"> <i class="fas fa-angle-double-left"></i> </button>
             </div>
             <div class="cover">
                 <div class="scroll-images">
@@ -362,7 +342,7 @@ export default {
                 </div>
             </div>
             <div>
-                <button class="icon" @click="scrollr()"> <i class="fas fa-angle-double-right"></i> </button>
+                <button class="icon" @click="scrollr('.scroll-images')"> <i class="fas fa-angle-double-right"></i> </button>
             </div>
         </div>
         <!-- /SHOW FILM AND TV SERIES CASTS -->
@@ -372,7 +352,7 @@ export default {
         <div class="main-scroll-div" :class="store.showCast ? 'no-all' : 'no-all'"
             v-if="store.showCast && store.isHome == 2 || store.showCast && store.isHome == 0 && store.filmName == ''">
             <div>
-                <button class="icon" @click="scrolll1()"> <i class="fas fa-angle-double-left"></i> </button>
+                <button class="icon" @click="scrolll('.scroll-images1')"> <i class="fas fa-angle-double-left"></i> </button>
             </div>
             <div class="cover">
                 <div class="scroll-images1">
@@ -380,7 +360,7 @@ export default {
                 </div>
             </div>
             <div>
-                <button class="icon" @click="scrollr1()"> <i class="fas fa-angle-double-right"></i> </button>
+                <button class="icon" @click="scrollr('.scroll-images1')"> <i class="fas fa-angle-double-right"></i> </button>
             </div>
         </div>
         <!-- /SHOW ONLY FILM CASTS -->
@@ -390,7 +370,7 @@ export default {
         <div class="main-scroll-div" :class="store.showCast ? 'no-all' : 'no-all'"
             v-if="store.showCast && store.isHome == 1 || store.showCast && store.isHome == 0 && store.filmName == ''">
             <div>
-                <button class="icon" @click="scrolll2()"> <i class="fas fa-angle-double-left"></i> </button>
+                <button class="icon" @click="scrolll('.scroll-images2')"> <i class="fas fa-angle-double-left"></i> </button>
             </div>
             <div class="cover">
                 <div class="scroll-images2">
@@ -398,7 +378,7 @@ export default {
                 </div>
             </div>
             <div>
-                <button class="icon" @click="scrollr2()"> <i class="fas fa-angle-double-right"></i> </button>
+                <button class="icon" @click="scrollr('.scroll-images2')"> <i class="fas fa-angle-double-right"></i> </button>
             </div>
         </div>
         <!-- /SHOW ONLY TV SERIES CASTS -->
@@ -415,7 +395,7 @@ export default {
         <div class="main-scroll-div" :class="store.showCast ? 'no-all' : 'no-all'"
             v-if="!store.showCast && store.isHome == 0">
             <div>
-                <button class="icon" @click="scrolll()"> <i class="fas fa-angle-double-left"></i> </button>
+                <button class="icon" @click="scrolll('.scroll-images')"> <i class="fas fa-angle-double-left"></i> </button>
             </div>
             <div class="cover">
                 <div class="scroll-images">
@@ -423,7 +403,7 @@ export default {
                 </div>
             </div>
             <div>
-                <button class="icon" @click="scrollr()"> <i class="fas fa-angle-double-right"></i> </button>
+                <button class="icon" @click="scrollr('.scroll-images')"> <i class="fas fa-angle-double-right"></i> </button>
             </div>
         </div>
         <!-- /SHOW FILM AND TV SERIES TRENDING -->
@@ -440,7 +420,7 @@ export default {
                     <span v-if="store.doNotShowFilm">I film più visti al giorno</span>
                 </div>
                 <div>
-                    <button class="icon" @click="scrolll1()"> <i class="fas fa-angle-double-left"></i> </button>
+                    <button class="icon" @click="scrolll('.scroll-images1')"> <i class="fas fa-angle-double-left"></i> </button>
                 </div>
                 <div class="cover">
                     <div class="scroll-images1">
@@ -448,7 +428,7 @@ export default {
                     </div>
                 </div>
                 <div>
-                    <button class="icon" @click="scrollr1()"> <i class="fas fa-angle-double-right"></i> </button>
+                    <button class="icon" @click="scrollr('.scroll-images1')"> <i class="fas fa-angle-double-right"></i> </button>
                 </div>
             </div>
 
@@ -467,7 +447,7 @@ export default {
                         <span v-if="store.doNotShowSeries">Le Serie TV più viste al giorno</span>
                     </div>
                     <div>
-                        <button class="icon" @click="scrolll2()"> <i class="fas fa-angle-double-left"></i> </button>
+                        <button class="icon" @click="scrolll('.scroll-images2')"> <i class="fas fa-angle-double-left"></i> </button>
                     </div>
                     <div class="cover">
                         <div class="scroll-images2">
@@ -475,7 +455,7 @@ export default {
                         </div>
                     </div>
                     <div>
-                        <button class="icon" @click="scrollr2()"> <i class="fas fa-angle-double-right"></i> </button>
+                        <button class="icon" @click="scrollr('.scroll-images2')"> <i class="fas fa-angle-double-right"></i> </button>
                     </div>
                 </div>
             </div>
