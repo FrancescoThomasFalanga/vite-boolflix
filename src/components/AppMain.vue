@@ -1,5 +1,5 @@
 <script>
-import {store} from "../store.js";
+import { store } from "../store.js";
 import axios from "axios";
 import SearchItem from "./SearchItem.vue";
 import AllCard from "./AllCard.vue";
@@ -27,7 +27,7 @@ export default {
     created() {
 
         axios.get(this.store.APIcallTrending).then((res) => {
-            
+
             this.store.showCast = false;
             this.showTrendingText = true;
             this.store.films = res.data.results;
@@ -74,12 +74,12 @@ export default {
                 newSeriesApiString += `${this.store.APIquery}${this.store.filmName}`;
 
                 axios.get(newSeriesApiString).then((res) => {
-    
+
                     res.data.results.forEach(result => {
                         this.store.series = result;
                         this.store.films.push(store.series);
                     })
-    
+
                 });
 
                 this.store.APIcallTrending = "";
@@ -175,62 +175,28 @@ export default {
                 newArray = [];
 
                 this.store.films.forEach((element) => {
-    
+
                     this.store.actorName.push(element.id);
-    
-                    newArray.push(uncompletedAPI +  element.id + this.store.toCompleteApiCallCredits);
-    
+
+                    newArray.push(uncompletedAPI + element.id + this.store.toCompleteApiCallCredits);
+
                     element.cast = [];
-    
-                    
+
+
                 });
-    
+
                 for (let i = 0; i < newArray.length; i++) {
-                    
+
                     axios.get(newArray[i]).then((res) => {
-                        
+
                         res.data.cast.splice(5)
-                        
+
                         let actors = res.data.cast.map(actor => actor.name);
-                        
+
                         this.store.films[i].cast = actors;
                         this.store.actors.push(actors);
-    
-                        
-                    });
-                };
-                
-            };
 
 
-            if (store.isHome == 1 || store.isHome == 0) {
-
-                uncompletedAPI = this.store.uncompletedApiCallCredits;
-                newArray = [];
-
-                this.store.onlyFilms.forEach((element) => {
-
-                    this.store.actorName.push(element.id);
-
-                    newArray.push(uncompletedAPI +  element.id + this.store.toCompleteApiCallCredits);
-
-                    element.cast = [];
-
-                    
-                });
-
-                for (let i = 0; i < newArray.length; i++) {
-                    
-                    axios.get(newArray[i]).then((res) => {
-                        
-                        res.data.cast.splice(5)
-                        
-                        let actors = res.data.cast.map(actor => actor.name);
-                        
-                        this.store.onlyFilms[i].cast = actors;
-                        this.store.filmActors.push(actors);
-
-                        
                     });
                 };
 
@@ -239,6 +205,40 @@ export default {
 
             if (store.isHome == 2 || store.isHome == 0) {
 
+                uncompletedAPI = this.store.uncompletedApiCallCredits;
+                newArray = [];
+
+                this.store.onlyFilms.forEach((element) => {
+
+                    this.store.actorName.push(element.id);
+
+                    newArray.push(uncompletedAPI + element.id + this.store.toCompleteApiCallCredits);
+
+                    element.cast = [];
+
+
+                });
+
+                for (let i = 0; i < newArray.length; i++) {
+
+                    axios.get(newArray[i]).then((res) => {
+
+                        res.data.cast.splice(5)
+
+                        let actors = res.data.cast.map(actor => actor.name);
+
+                        this.store.onlyFilms[i].cast = actors;
+                        this.store.filmActors.push(actors);
+
+
+                    });
+                };
+
+            };
+
+
+            if (store.isHome == 1 || store.isHome == 0) {
+
                 uncompletedAPI = "https://api.themoviedb.org/3/tv/";
                 newArray = [];
 
@@ -246,25 +246,25 @@ export default {
 
                     this.store.actorName.push(element.id);
 
-                    newArray.push(uncompletedAPI +  element.id + this.store.toCompleteApiCallCredits);
+                    newArray.push(uncompletedAPI + element.id + this.store.toCompleteApiCallCredits);
 
                     element.cast = [];
-                    
+
                 });
 
                 for (let i = 0; i < newArray.length; i++) {
 
-                    
+
                     axios.get(newArray[i]).then((res) => {
-                        
+
                         res.data.cast.splice(5)
-                        
+
                         let actorSeries = res.data.cast.map(actor => actor.name);
-                        
+
                         this.store.series[i].cast = actorSeries;
                         this.store.seriesActors.push(actorSeries);
 
-                        
+
                     });
                 };
 
@@ -277,32 +277,32 @@ export default {
 
         // SOME functions for horizzontal scroll 
         scrolll() {
-            var left= document.querySelector(".scroll-images");
+            var left = document.querySelector(".scroll-images");
             left.scrollBy(-350, 0);
         },
 
         scrolll1() {
-            var left1= document.querySelector(".scroll-images1");
+            var left1 = document.querySelector(".scroll-images1");
             left1.scrollBy(-350, 0);
         },
 
         scrolll2() {
-            var left2= document.querySelector(".scroll-images2");
+            var left2 = document.querySelector(".scroll-images2");
             left2.scrollBy(-350, 0);
         },
 
         scrollr() {
-            var left= document.querySelector(".scroll-images");
+            var left = document.querySelector(".scroll-images");
             left.scrollBy(350, 0);
         },
 
         scrollr1() {
-            var left1= document.querySelector(".scroll-images1");
+            var left1 = document.querySelector(".scroll-images1");
             left1.scrollBy(350, 0);
         },
 
         scrollr2() {
-            var left2= document.querySelector(".scroll-images2");
+            var left2 = document.querySelector(".scroll-images2");
             left2.scrollBy(350, 0);
         },
         // /SOME functions for horizzontal scroll
@@ -339,7 +339,6 @@ export default {
 
 
 <template>
-
     <!-- NAV-BAR WITH ALL LINKS AND SEARCH -->
     <div class="nav-bar">
         <SearchItem @searchFilm="search()" @actorFilters="actorFilters()"></SearchItem>
@@ -352,7 +351,8 @@ export default {
     <div class="film-container">
 
         <!-- SHOW FILM AND TV SERIES CASTS -->
-        <div class="main-scroll-div" :class="store.showCast ? 'no-all' : 'no-all' " v-if="store.showCast && store.isHome == 0">
+        <div class="main-scroll-div" :class="store.showCast ? 'no-all' : 'no-all'"
+            v-if="store.showCast && store.isHome == 0">
             <div>
                 <button class="icon" @click="scrolll()"> <i class="fas fa-angle-double-left"></i> </button>
             </div>
@@ -369,7 +369,8 @@ export default {
 
 
         <!-- SHOW ONLY FILM CASTS -->
-        <div class="main-scroll-div" :class="store.showCast ? 'no-all' : 'no-all' " v-if="store.showCast && store.isHome == 2 || store.showCast && store.isHome == 0 && store.filmName == '' ">
+        <div class="main-scroll-div" :class="store.showCast ? 'no-all' : 'no-all'"
+            v-if="store.showCast && store.isHome == 2 || store.showCast && store.isHome == 0 && store.filmName == ''">
             <div>
                 <button class="icon" @click="scrolll1()"> <i class="fas fa-angle-double-left"></i> </button>
             </div>
@@ -386,7 +387,8 @@ export default {
 
 
         <!-- SHOW ONLY TV SERIES CASTS -->
-        <div class="main-scroll-div" :class="store.showCast ? 'no-all' : 'no-all' " v-if="store.showCast && store.isHome == 1 || store.showCast && store.isHome == 0 && store.filmName == '' ">
+        <div class="main-scroll-div" :class="store.showCast ? 'no-all' : 'no-all'"
+            v-if="store.showCast && store.isHome == 1 || store.showCast && store.isHome == 0 && store.filmName == ''">
             <div>
                 <button class="icon" @click="scrolll2()"> <i class="fas fa-angle-double-left"></i> </button>
             </div>
@@ -410,7 +412,8 @@ export default {
 
 
         <!-- SHOW FILM AND TV SERIES TRENDING -->
-        <div class="main-scroll-div" :class="store.showCast ? 'no-all' : 'no-all' " v-if="!store.showCast && store.isHome == 0">
+        <div class="main-scroll-div" :class="store.showCast ? 'no-all' : 'no-all'"
+            v-if="!store.showCast && store.isHome == 0">
             <div>
                 <button class="icon" @click="scrolll()"> <i class="fas fa-angle-double-left"></i> </button>
             </div>
@@ -427,11 +430,13 @@ export default {
 
 
         <!-- SHOW ONLY FILM TRENDING FOR DAY -->
-        <div v-if="store.isHome == 2 || store.isHome == 0" class="main-scroll-div" :class="store.isHome == 2 ? 'no-all-plus' : '' ">
+        <div v-if="store.isHome == 2 || store.isHome == 0" class="main-scroll-div"
+            :class="store.isHome == 2 ? 'no-all-plus' : ''">
 
-            <div class="main-scroll-div" :class="store.showCast ? 'some-margin' : 'some-margin' " v-if="!store.showCast && !store.APIcallTrending == '' ">
+            <div class="main-scroll-div" :class="store.showCast ? 'some-margin' : 'some-margin'"
+                v-if="!store.showCast && !store.APIcallTrending == ''">
 
-                <div class="more" v-if="!store.APIcallTrending == '' ">
+                <div class="more" v-if="!store.APIcallTrending == ''">
                     <span v-if="store.doNotShowFilm">I film più visti al giorno</span>
                 </div>
                 <div>
@@ -454,9 +459,11 @@ export default {
         <!-- SHOW ONLY SERIES TRENDING FOR DAY -->
         <div v-if="store.isHome == 1 || store.isHome == 0" class="main-scroll-div">
 
-            <div v-if="!store.showCast && !store.APIcallTrending == '' " class="main-scroll-div" :class="store.isHome == 1 ? 'no-all-plus' : '' ">
-                <div class="main-scroll-div" :class="store.showCast ? 'some-margin' : 'some-margin' " v-if="!store.showCast && !store.APIcallTrending == ''">
-                    <div class="more" v-if="!store.APIcallTrending == '' ">
+            <div v-if="!store.showCast && !store.APIcallTrending == ''" class="main-scroll-div"
+                :class="store.isHome == 1 ? 'no-all-plus' : ''">
+                <div class="main-scroll-div" :class="store.showCast ? 'some-margin' : 'some-margin'"
+                    v-if="!store.showCast && !store.APIcallTrending == ''">
+                    <div class="more" v-if="!store.APIcallTrending == ''">
                         <span v-if="store.doNotShowSeries">Le Serie TV più viste al giorno</span>
                     </div>
                     <div>
@@ -478,52 +485,56 @@ export default {
 
     </div>
     <!-- /COMMON CONTAINER FO ALL ELEMENTS -->
-
 </template>
 
 
 <style lang="scss" scoped>
-
 .nav-bar {
-        position: fixed;
-        top: 0;
-        z-index: 5;
-        width: 100%;
-        background-color: black;
-    }
+    position: fixed;
+    top: 0;
+    z-index: 5;
+    width: 100%;
+    background-color: black;
+}
+
 // __________________________________________
 .film-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 20px;
+    margin: -100px 40px 50px;
+
+    // __________________________________________
+    .flex {
         display: flex;
-        flex-wrap:  wrap;
-        flex-direction: column;
+        justify-content: space-around;
+        flex-wrap: wrap;
         gap: 20px;
-        margin: -100px 40px 50px;
-// __________________________________________
-.flex {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 20px;
-            width: 100%;
-            
-        }
-// __________________________________________
-        .trending {
-            width: 100%;
-            padding-left: 30px;
-            font-size: 26px;
-            font-weight: bold;
-            margin-bottom: -180px;
-        }
-// __________________________________________
-        .no-all {
-            margin-top: 180px;
-        }
-// __________________________________________
-        .no-all-plus {
-            margin-top: 300px;
-        }
+        width: 100%;
+
     }
+
+    // __________________________________________
+    .trending {
+        width: 100%;
+        padding-left: 30px;
+        font-size: 26px;
+        font-weight: bold;
+        margin-bottom: -180px;
+    }
+
+    // __________________________________________
+    .no-all {
+        margin-top: 180px;
+    }
+
+    // __________________________________________
+    .no-all-plus {
+        margin-top: 300px;
+    }
+}
+
 // __________________________________________
 
 
@@ -535,10 +546,12 @@ export default {
     font-weight: bold;
     font-size: 26px;
 }
+
 // __________________________________________
 .some-margin {
     margin-top: 80px;
 }
+
 // __________________________________________
 .main-scroll-div {
     position: relative;
@@ -547,12 +560,14 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-// __________________________________________
+
+    // __________________________________________
     .cover {
-    position: relative;
-    width: 90%;
-    height: 60%;
-// __________________________________________
+        position: relative;
+        width: 90%;
+        height: 60%;
+
+        // __________________________________________
         &::before {
             position: absolute;
             content: "";
@@ -563,7 +578,8 @@ export default {
             width: 60px;
             background-image: linear-gradient(90deg, black, transparent);
         }
-// __________________________________________
+
+        // __________________________________________
         &::after {
             position: absolute;
             content: "";
@@ -574,8 +590,11 @@ export default {
             width: 60px;
             background-image: linear-gradient(-90deg, black, transparent);
         }
-// __________________________________________
-        .scroll-images, .scroll-images1, .scroll-images2 {
+
+        // __________________________________________
+        .scroll-images,
+        .scroll-images1,
+        .scroll-images2 {
             width: 100%;
             height: auto;
             display: flex;
@@ -583,7 +602,8 @@ export default {
             overflow: auto;
             position: relative;
             scroll-behavior: smooth;
-// __________________________________________
+
+            // __________________________________________
             .child {
                 min-width: 300px;
                 min-height: 450px;
@@ -594,15 +614,20 @@ export default {
             }
         }
     }
-// __________________________________________
-    .scroll-images::-webkit-scrollbar, .scroll-images1::-webkit-scrollbar, .scroll-images2::-webkit-scrollbar {
+
+    // __________________________________________
+    .scroll-images::-webkit-scrollbar,
+    .scroll-images1::-webkit-scrollbar,
+    .scroll-images2::-webkit-scrollbar {
         -webkit-appearance: none;
     }
+
     .child-img {
         width: 100%;
         height: 100%;
     }
-// __________________________________________
+
+    // __________________________________________
     .icon {
         color: white;
         background-color: black;
@@ -612,5 +637,4 @@ export default {
         padding: 0px 20px;
         cursor: pointer;
     }
-}
-</style>
+}</style>
