@@ -1,3 +1,5 @@
+<!-- JUST A COMPONENT FOR SHOWS A VIDEO IN TEST -->
+
 <script>
 export default {
     data() {
@@ -8,6 +10,7 @@ export default {
 }
 </script>
 
+<!-- JUST A COMPONENT FOR SHOWS A VIDEO IN TEST -->
 
 <template>
     <div class="video">
@@ -15,6 +18,7 @@ export default {
     </div>
 </template>
 
+<!-- JUST A COMPONENT FOR SHOWS A VIDEO IN TEST -->
 
 <style lang="scss" scoped>
     
@@ -30,3 +34,5 @@ export default {
 
 
 </style>
+
+<!-- JUST A COMPONENT FOR SHOWS A VIDEO IN TEST -->

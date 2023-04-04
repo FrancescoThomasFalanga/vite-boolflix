@@ -1,3 +1,5 @@
+<!-- THIS COMPONENT MANAGES ONLY THE CARDS FOR SHOW OR DON'T SHOW THE CASTS-->
+
 <script>
 import {store} from "../store.js";
 
@@ -17,6 +19,8 @@ export default {
 }
 </script>
 
+
+<!-- THIS COMPONENT MANAGES ONLY THE CARDS FOR SHOW OR DON'T SHOW THE CASTS-->
 
 <template>
     <div class="actor-card" v-if="store.showCast">
@@ -41,6 +45,7 @@ export default {
     </div>
 </template>
 
+<!-- THIS COMPONENT MANAGES ONLY THE CARDS FOR SHOW OR DON'T SHOW THE CASTS-->
 
 <style lang="scss" scoped>
 

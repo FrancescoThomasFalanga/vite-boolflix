@@ -23,6 +23,7 @@ export default {
         ActorsFiltersItem,
     },
 
+    // when the app starts it automatically shows 3 section in the homepage with trending movies and series for week and day
     created() {
 
         axios.get(this.store.APIcallTrending).then((res) => {
@@ -38,18 +39,18 @@ export default {
 
     },
 
-    props: {
-    },
-
     methods: {
 
+        // main search for film or tv series name
         search() {
 
             this.store.showTrending = false;
             this.store.showCast = false;
 
             let newFilmApiString = this.store.APIcallFilm;
+            let newSeriesApiString = this.store.APIcallSeries;
 
+            // manages only the homepage
             if (!this.store.filmName == "" && store.isHome == 0) {
 
                 newFilmApiString += `${this.store.APIquery}${this.store.filmName}`;
@@ -68,9 +69,6 @@ export default {
 
             };
 
-
-            let newSeriesApiString = this.store.APIcallSeries;
-
             if (!this.store.filmName == "" && store.isHome == 0) {
 
                 newSeriesApiString += `${this.store.APIquery}${this.store.filmName}`;
@@ -87,9 +85,10 @@ export default {
                 this.store.APIcallTrending = "";
 
             };
+            // /manages only the homepage
 
 
-
+            // manages only the tvseries index
             if (!this.store.filmName == "" && store.isHome == 2) {
 
                 this.store.doNotShowFilm = false;
@@ -117,9 +116,10 @@ export default {
                 })
 
             };
+            // /manages only the tvseries index
 
 
-
+            // manages only the films index
             if (!this.store.filmName == "" && store.isHome == 1) {
 
                 this.store.doNotShowSeries = false;
@@ -145,9 +145,11 @@ export default {
                 });
 
             };
+            // /manages only the films index
 
         },
 
+        // APIcall for optimization
         callApi(string) {
 
             axios.get(string).then((res) => {
@@ -159,13 +161,13 @@ export default {
 
         },
 
+        // filter actor by pressing a button
         actorFilters() {
 
             let uncompletedAPI = this.store.uncompletedApiCallCredits;
             let newArray = [];
 
             this.store.showCast = true;
-
 
             if (store.isHome == 0) {
 
@@ -268,23 +270,46 @@ export default {
 
             };
 
-    
-
-            
-
             console.log(this.store.actors);
         },
 
+
+
+        // SOME functions for horizzontal scroll 
         scrolll() {
             var left= document.querySelector(".scroll-images");
-            left.scrollBy(-350, 0)
+            left.scrollBy(-350, 0);
+        },
+
+        scrolll1() {
+            var left1= document.querySelector(".scroll-images1");
+            left1.scrollBy(-350, 0);
+        },
+
+        scrolll2() {
+            var left2= document.querySelector(".scroll-images2");
+            left2.scrollBy(-350, 0);
         },
 
         scrollr() {
             var left= document.querySelector(".scroll-images");
-            left.scrollBy(350, 0)
+            left.scrollBy(350, 0);
         },
 
+        scrollr1() {
+            var left1= document.querySelector(".scroll-images1");
+            left1.scrollBy(350, 0);
+        },
+
+        scrollr2() {
+            var left2= document.querySelector(".scroll-images2");
+            left2.scrollBy(350, 0);
+        },
+        // /SOME functions for horizzontal scroll
+
+
+
+        // by created function shows trending Movies for days
         trendingMovies() {
 
             this.store.showCast = false;
@@ -296,6 +321,7 @@ export default {
 
         },
 
+        // by created function shows trending TV Series for days
         trendingSeries() {
 
             this.store.showCast = false;
@@ -314,13 +340,18 @@ export default {
 
 <template>
 
+    <!-- NAV-BAR WITH ALL LINKS AND SEARCH -->
     <div class="nav-bar">
         <SearchItem @searchFilm="search()" @actorFilters="actorFilters()"></SearchItem>
     </div>
+    <!-- /NAV-BAR WITH ALL LINKS AND SEARCH -->
 
 
+
+    <!-- COMMON CONTAINER FO ALL ELEMENTS -->
     <div class="film-container">
 
+        <!-- SHOW FILM AND TV SERIES CASTS -->
         <div class="main-scroll-div" :class="store.showCast ? 'no-all' : 'no-all' " v-if="store.showCast && store.isHome == 0">
             <div>
                 <button class="icon" @click="scrolll()"> <i class="fas fa-angle-double-left"></i> </button>
@@ -334,42 +365,51 @@ export default {
                 <button class="icon" @click="scrollr()"> <i class="fas fa-angle-double-right"></i> </button>
             </div>
         </div>
+        <!-- /SHOW FILM AND TV SERIES CASTS -->
 
+
+        <!-- SHOW ONLY FILM CASTS -->
         <div class="main-scroll-div" :class="store.showCast ? 'no-all' : 'no-all' " v-if="store.showCast && store.isHome == 2 || store.showCast && store.isHome == 0 && store.filmName == '' ">
             <div>
-                <button class="icon" @click="scrolll()"> <i class="fas fa-angle-double-left"></i> </button>
+                <button class="icon" @click="scrolll1()"> <i class="fas fa-angle-double-left"></i> </button>
             </div>
             <div class="cover">
-                <div class="scroll-images">
+                <div class="scroll-images1">
                     <ActorsFiltersItem v-for="actor in store.onlyFilms" :actor="actor" class="child"></ActorsFiltersItem>
                 </div>
             </div>
             <div>
-                <button class="icon" @click="scrollr()"> <i class="fas fa-angle-double-right"></i> </button>
+                <button class="icon" @click="scrollr1()"> <i class="fas fa-angle-double-right"></i> </button>
             </div>
         </div>
+        <!-- /SHOW ONLY FILM CASTS -->
 
+
+        <!-- SHOW ONLY TV SERIES CASTS -->
         <div class="main-scroll-div" :class="store.showCast ? 'no-all' : 'no-all' " v-if="store.showCast && store.isHome == 1 || store.showCast && store.isHome == 0 && store.filmName == '' ">
             <div>
-                <button class="icon" @click="scrolll()"> <i class="fas fa-angle-double-left"></i> </button>
+                <button class="icon" @click="scrolll2()"> <i class="fas fa-angle-double-left"></i> </button>
             </div>
             <div class="cover">
-                <div class="scroll-images">
+                <div class="scroll-images2">
                     <ActorsFiltersItem v-for="actor in store.series" :actor="actor" class="child"></ActorsFiltersItem>
                 </div>
             </div>
             <div>
-                <button class="icon" @click="scrollr()"> <i class="fas fa-angle-double-right"></i> </button>
+                <button class="icon" @click="scrollr2()"> <i class="fas fa-angle-double-right"></i> </button>
             </div>
         </div>
+        <!-- /SHOW ONLY TV SERIES CASTS -->
 
 
-
-
+        <!-- SHOW TRENDING TEXT IN HOMEPAGE -->
         <div class="trending" v-if="!store.APIcallTrending == '' && !store.showCast">
             In Tendenza Questa Settimana
         </div>
+        <!-- /SHOW TRENDING TEXT IN HOMEPAGE -->
 
+
+        <!-- SHOW FILM AND TV SERIES TRENDING -->
         <div class="main-scroll-div" :class="store.showCast ? 'no-all' : 'no-all' " v-if="!store.showCast && store.isHome == 0">
             <div>
                 <button class="icon" @click="scrolll()"> <i class="fas fa-angle-double-left"></i> </button>
@@ -383,61 +423,109 @@ export default {
                 <button class="icon" @click="scrollr()"> <i class="fas fa-angle-double-right"></i> </button>
             </div>
         </div>
+        <!-- /SHOW FILM AND TV SERIES TRENDING -->
 
 
-        <div v-if="store.isHome == 2 || store.isHome == 0" class="main-scroll-div column" :class="store.isHome == 2 ? 'no-all-plus' : '' ">
+        <!-- SHOW ONLY FILM TRENDING FOR DAY -->
+        <div v-if="store.isHome == 2 || store.isHome == 0" class="main-scroll-div" :class="store.isHome == 2 ? 'no-all-plus' : '' ">
 
             <div class="main-scroll-div" :class="store.showCast ? 'some-margin' : 'some-margin' " v-if="!store.showCast && !store.APIcallTrending == '' ">
 
                 <div class="more" v-if="!store.APIcallTrending == '' ">
-                    <span v-if="store.doNotShowFilm">I film più visti (giornalmente)</span>
+                    <span v-if="store.doNotShowFilm">I film più visti al giorno</span>
                 </div>
                 <div>
-                    <button class="icon" @click="scrolll()"> <i class="fas fa-angle-double-left"></i> </button>
+                    <button class="icon" @click="scrolll1()"> <i class="fas fa-angle-double-left"></i> </button>
                 </div>
                 <div class="cover">
-                    <div class="scroll-images">
+                    <div class="scroll-images1">
                         <FilmCard v-for="film in store.onlyFilms" :film="film" class="child"></FilmCard>
                     </div>
                 </div>
                 <div>
-                    <button class="icon" @click="scrollr()"> <i class="fas fa-angle-double-right"></i> </button>
+                    <button class="icon" @click="scrollr1()"> <i class="fas fa-angle-double-right"></i> </button>
                 </div>
             </div>
 
         </div>
-        
-        <div v-if="store.isHome == 1 || store.isHome == 0" class="main-scroll-div column">
+        <!-- /SHOW ONLY FILM TRENDING FOR DAY -->
+
+
+        <!-- SHOW ONLY SERIES TRENDING FOR DAY -->
+        <div v-if="store.isHome == 1 || store.isHome == 0" class="main-scroll-div">
 
             <div v-if="!store.showCast && !store.APIcallTrending == '' " class="main-scroll-div" :class="store.isHome == 1 ? 'no-all-plus' : '' ">
-    
                 <div class="main-scroll-div" :class="store.showCast ? 'some-margin' : 'some-margin' " v-if="!store.showCast && !store.APIcallTrending == ''">
                     <div class="more" v-if="!store.APIcallTrending == '' ">
-                        <span v-if="store.doNotShowSeries">Le Serie TV più viste (giornalmente)</span>
+                        <span v-if="store.doNotShowSeries">Le Serie TV più viste al giorno</span>
                     </div>
                     <div>
-                        <button class="icon" @click="scrolll()"> <i class="fas fa-angle-double-left"></i> </button>
+                        <button class="icon" @click="scrolll2()"> <i class="fas fa-angle-double-left"></i> </button>
                     </div>
                     <div class="cover">
-                        <div class="scroll-images">
+                        <div class="scroll-images2">
                             <SeriesCard v-for="series in store.series" :series="series" class="child"></SeriesCard>
                         </div>
                     </div>
                     <div>
-                        <button class="icon" @click="scrollr()"> <i class="fas fa-angle-double-right"></i> </button>
+                        <button class="icon" @click="scrollr2()"> <i class="fas fa-angle-double-right"></i> </button>
                     </div>
                 </div>
-    
             </div>
 
         </div>
+        <!-- /SHOW ONLY SERIES TRENDING FOR DAY -->
 
     </div>
+    <!-- /COMMON CONTAINER FO ALL ELEMENTS -->
 
 </template>
 
 
 <style lang="scss" scoped>
+
+.nav-bar {
+        position: fixed;
+        top: 0;
+        z-index: 5;
+        width: 100%;
+        background-color: black;
+    }
+// __________________________________________
+.film-container {
+        display: flex;
+        flex-wrap:  wrap;
+        flex-direction: column;
+        gap: 20px;
+        margin: -100px 40px 50px;
+// __________________________________________
+.flex {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+            width: 100%;
+            
+        }
+// __________________________________________
+        .trending {
+            width: 100%;
+            padding-left: 30px;
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: -180px;
+        }
+// __________________________________________
+        .no-all {
+            margin-top: 180px;
+        }
+// __________________________________________
+        .no-all-plus {
+            margin-top: 300px;
+        }
+    }
+// __________________________________________
+
 
 .more {
     position: absolute;
@@ -447,15 +535,11 @@ export default {
     font-weight: bold;
     font-size: 26px;
 }
-
+// __________________________________________
 .some-margin {
     margin-top: 80px;
 }
-
-.column {
-    flex-direction: column;
-}
-
+// __________________________________________
 .main-scroll-div {
     position: relative;
     width: 100%;
@@ -463,12 +547,12 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
+// __________________________________________
     .cover {
     position: relative;
     width: 90%;
     height: 60%;
-    
+// __________________________________________
         &::before {
             position: absolute;
             content: "";
@@ -479,7 +563,7 @@ export default {
             width: 60px;
             background-image: linear-gradient(90deg, black, transparent);
         }
-
+// __________________________________________
         &::after {
             position: absolute;
             content: "";
@@ -490,8 +574,8 @@ export default {
             width: 60px;
             background-image: linear-gradient(-90deg, black, transparent);
         }
-
-        .scroll-images {
+// __________________________________________
+        .scroll-images, .scroll-images1, .scroll-images2 {
             width: 100%;
             height: auto;
             display: flex;
@@ -499,6 +583,7 @@ export default {
             overflow: auto;
             position: relative;
             scroll-behavior: smooth;
+// __________________________________________
             .child {
                 min-width: 300px;
                 min-height: 450px;
@@ -508,18 +593,16 @@ export default {
                 overflow: hidden;
             }
         }
-    
     }
-
-
-    .scroll-images::-webkit-scrollbar {
+// __________________________________________
+    .scroll-images::-webkit-scrollbar, .scroll-images1::-webkit-scrollbar, .scroll-images2::-webkit-scrollbar {
         -webkit-appearance: none;
     }
     .child-img {
         width: 100%;
         height: 100%;
     }
-
+// __________________________________________
     .icon {
         color: white;
         background-color: black;
@@ -530,49 +613,4 @@ export default {
         cursor: pointer;
     }
 }
-
-
-
-
-    .nav-bar {
-        position: fixed;
-        top: 0;
-        z-index: 5;
-        width: 100%;
-        background-color: black;
-    }
-
-    .film-container {
-        display: flex;
-        flex-wrap:  wrap;
-        flex-direction: column;
-        gap: 20px;
-        margin: -100px 40px 50px;
-
-        .flex {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 20px;
-            width: 100%;
-            
-        }
-
-        .trending {
-            width: 100%;
-            padding-left: 30px;
-            font-size: 26px;
-            font-weight: bold;
-            margin-bottom: -180px;
-        }
-
-        .no-all {
-            margin-top: 180px;
-        }
-
-        .no-all-plus {
-            margin-top: 300px;
-        }
-
-    }
 </style>
