@@ -103,6 +103,18 @@ export const store = reactive({
     // show / do not show the tvseries
     doNotShowSeries: true,
 
+
+
+    /*
+    prendiIGeneri: [],
+
+    generiDeiFilm: [],
+
+    generiTotali: [],
+    
+    generiFull: [],
+    */
+
 });
 
 

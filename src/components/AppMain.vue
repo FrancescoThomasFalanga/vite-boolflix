@@ -37,9 +37,56 @@ export default {
         this.trendingMovies();
         this.trendingSeries();
 
+        // this.filtraGeneri();
+
     },
 
     methods: {
+
+        // Avendo controllato per l'ultima volta oggi l'esercizio mi son reso conto che mancava un pezzo della Milestone 5
+        // Ho aggiunto adesso questa funzione (visualizzare i generi al click del button "CAST") ma adesso per mancanza di tempo
+        // Non son riuscito a stamparla in pagina ma funziona :D
+
+        /* filtraGeneri() {
+
+            axios.get(this.store.APIcallTrendingMoviesDay).then((elem) => {
+
+                this.store.prendiIGeneri = elem.data.results;
+
+                this.store.prendiIGeneri.forEach((genere) => {
+    
+                    this.store.generiDeiFilm.push(genere.genre_ids);
+    
+                });
+            });
+
+            axios.get(this.store.APIcallGenreMovies).then((genre) => {
+
+                this.store.generiTotali = genre.data.genres;
+
+                this.store.generiTotali.forEach((genere) => {
+    
+                    this.store.generiFull.push(genere);
+
+                });
+
+                const generiDeiFilmConNome = this.store.generiDeiFilm.map((idsFilm) => {
+                    const nomiGeneri = idsFilm.map((id) => {
+                        const genereCorrispondente = this.store.generiFull.find((g) => g.id === id);
+                        return genereCorrispondente ? genereCorrispondente.name : '';
+                    });
+                    return nomiGeneri;
+                });
+
+            console.log(generiDeiFilmConNome);
+                
+            });
+            
+            console.log(this.store.generiFull);
+            console.log(this.store.generiDeiFilm);
+
+        }, */
+
 
         // main search for film or tv series name
         search() {
