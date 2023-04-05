@@ -31,11 +31,11 @@ export const store = reactive({
 
 
     // API call only for films trending (day)
-    APIcallTrendingMoviesDay: "https://api.themoviedb.org/3/trending/movie/day?api_key=6529eb99a13649a95432918926d0d7ce",
+    APIcallTrendingMoviesDay: "https://api.themoviedb.org/3/trending/movie/day?api_key=6529eb99a13649a95432918926d0d7ce&language=it-IT",
 
 
     // API call only for series trending (day)
-    APIcallTrendingSeriesDay: "https://api.themoviedb.org/3/trending/tv/day?api_key=6529eb99a13649a95432918926d0d7ce",
+    APIcallTrendingSeriesDay: "https://api.themoviedb.org/3/trending/tv/day?api_key=6529eb99a13649a95432918926d0d7ce&language=it-IT",
 
 
     // API call for search button (it shows movies)
@@ -51,14 +51,14 @@ export const store = reactive({
     filterGenre: "",
 
     // API call for search different genres (it shows movies)
-    APIcallGenreMovies: "https://api.themoviedb.org/3/genre/movie/list?api_key=6529eb99a13649a95432918926d0d7ce",
+    APIcallGenreMovies: "https://api.themoviedb.org/3/genre/movie/list?api_key=6529eb99a13649a95432918926d0d7ce&language=it-IT",
 
     // populate this array with ID and GENRE title (it shows movies)
     genreFilms: [],
 
 
     // API call for search different genres (it shows tvseries)
-    APIcallGenreSeries: "https://api.themoviedb.org/3/genre/tv/list?api_key=6529eb99a13649a95432918926d0d7ce",
+    APIcallGenreSeries: "https://api.themoviedb.org/3/genre/tv/list?api_key=6529eb99a13649a95432918926d0d7ce&language=it-IT",
 
     // populate this array with ID and GENRE title (it shows tvseries)
     genreSeries: [],
